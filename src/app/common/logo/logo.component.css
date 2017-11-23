@@ -1,0 +1,14 @@
+.logo {
+  display: inline-block;
+  max-height: 100px;
+}
+.logo_image {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  background: orange;
+}
+.logo_description {
+  display: inline-block;
+  height: 100%;
+}
