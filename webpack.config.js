@@ -9,6 +9,7 @@ const autoprefixer = require('autoprefixer');
 const postcssUrl = require('postcss-url');
 const cssnano = require('cssnano');
 const customProperties = require('postcss-custom-properties');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin } = require('webpack');
 const { NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin } = require('@angular/cli/plugins/webpack');
@@ -102,8 +103,8 @@ module.exports = env => {
   },
   "output": {
     "path": path.join(process.cwd(), output),
-    "filename": "[name].bundle.js",
-    "chunkFilename": "[id].chunk.js",
+    "filename": "scripts/[name].bundle.js",
+    "chunkFilename": "scripts/[id].chunk.js",
     "crossOriginLoading": false
   },
   "module": {
@@ -370,6 +371,7 @@ module.exports = env => {
   },
   "plugins": [
     new NoEmitOnErrorsPlugin(),
+    new CleanWebpackPlugin(output),
     new CopyWebpackPlugin([
       {
         "context": "src",
