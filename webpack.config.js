@@ -61,8 +61,7 @@ const postcssPlugins = function () {
         ].concat(minimizeCss ? [cssnano(minimizeOptions)] : []);
     };
 
-module.exports = env => {
-
+module.exports = (env = {}) => {
   let output = env.production ? 'docs' : 'dist';
 
   return {
@@ -452,7 +451,7 @@ module.exports = env => {
         "main"
       ]
     }),
-    new SourceMapDevToolPlugin({
+    new SourceMapDevToolPlugin(!env.production && {
       "filename": "[file].map[query]",
       "moduleFilenameTemplate": "[resource-path]",
       "fallbackModuleFilenameTemplate": "[resource-path]?[hash]",
@@ -472,7 +471,7 @@ module.exports = env => {
       "hostReplacementPaths": {
         "environments\\environment.ts": "environments\\environment.ts"
       },
-      "sourceMap": true,
+      "sourceMap": !env.production,
       "tsConfigPath": "src\\tsconfig.app.json",
       "skipCodeGeneration": true,
       "compilerOptions": {}
