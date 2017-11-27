@@ -6,7 +6,7 @@
   display: inline-block;
   width: 100px;
   height: 100px;
-  background: orange;
+  border: 1px solid #000000;
 }
 .logo_description {
   display: inline-block;

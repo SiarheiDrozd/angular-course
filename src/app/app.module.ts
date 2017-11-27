@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CourseModule } from "./modules/course/course.module";
+import { CourseModule } from './modules/course/course.module';
 
 import { AppComponent } from './app.component';
 import { FooterComponent } from './common/footer/footer.component';
