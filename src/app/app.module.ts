@@ -4,10 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { CourseModule } from './modules/course/course.module';
 
 import { AppComponent } from './app.component';
-import { FooterComponent } from './common/footer/footer.component';
-import { HeaderComponent } from './common/header/header.component';
-import { ButtonComponent } from './common/button/button.component';
-import { LogoComponent } from './common/logo/logo.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { ButtonComponent } from './components/common/button/button.component';
+import { LogoComponent } from './components/common/logo/logo.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { MainPageComponent } from './pages/courses-page/courses-page.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
