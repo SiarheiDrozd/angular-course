@@ -1,0 +1,12 @@
+<form onsubmit="return false;">
+  <label for="searchValue">
+    <input id="searchValue"
+           type="text"
+           placeholder="name fragment or date"
+           [(ngModel)]="searchKey"
+           [ngModelOptions]="{standalone: true}">
+  </label>
+  <button (click)="search(searchKey)">
+    Find
+  </button>
+</form>
