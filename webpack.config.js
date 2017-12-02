@@ -110,7 +110,7 @@ module.exports = (env = {}) => {
     "rules": [
       {
         "test": /\.html$/,
-        "loader": "raw-loader"
+        "loader": "html-loader"
       },
       {
         "test": /\.(eot|svg|cur)$/,
@@ -121,10 +121,20 @@ module.exports = (env = {}) => {
         }
       },
       {
-        "test": /\.(jpg|png|webp|gif|otf|ttf|woff|woff2|ani)$/,
-        "loader": "url-loader",
+        "test": /\.(otf|ttf|woff|woff2|ani)$/,
+        "loader": "file-loader",
         "options": {
           "name": "[name].[hash:20].[ext]",
+          "outputPath": "assets/fonts/",
+          "limit": 10000
+        }
+      },
+      {
+        "test": /\.(jpg|png|webp|gif)$/,
+        "loader": "file-loader",
+        "options": {
+          "name": "[name].[hash:20].[ext]",
+          "outputPath": "assets/images/",
           "limit": 10000
         }
       },
