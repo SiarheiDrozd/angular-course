@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 
 import {CourseBlockInterface} from './course-block.interface';
 
@@ -9,11 +9,35 @@ import {CourseBlockInterface} from './course-block.interface';
 })
 export class CourseBlockComponent implements OnInit {
   @Input('course') course: CourseBlockInterface;
+  @Output() courseDeleted = new EventEmitter();
 
   constructor() {
   }
 
   ngOnInit() {
   }
+  controlEvent(eventType) {
+    switch (eventType) {
+      case 'edit':
+        this.emitEdit();
+        break;
+      case 'delete':
+        this.emitDelete();
+        break;
+      default:
+        this.emitUnknownEvent(eventType);
+    }
+  }
 
+  emitUnknownEvent(eventName) {
+    console.log('unknown event: ', eventName);
+  }
+
+  emitEdit() {
+    console.log('edit: ', this.course.id);
+  }
+
+  emitDelete() {
+    this.courseDeleted.emit(this.course.id);
+  }
 }

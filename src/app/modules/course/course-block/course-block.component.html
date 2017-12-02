@@ -1,4 +1,5 @@
-<section id="{{course.id}}" class="course-block clearfix">
+<section id="{{course.id}}"
+         class="course-block clearfix">
   <div class="course-block_description inline-block float-left">
     <h2 class="inline-block">
       {{course.title}}
@@ -11,8 +12,11 @@
       {{course.description}}
     </p>
   </div>
-  <div *ngIf="course.controls" class="course-block_controls inline-block float-right">
-    <button *ngFor="let control of course.controls" class="button course-block_button">
+  <div *ngIf="course.controls"
+       class="course-block_controls inline-block float-right">
+    <button *ngFor="let control of course.controls"
+            class="button course-block_button"
+            (click)="controlEvent(control.event)">
       {{control.label}}
     </button>
   </div>

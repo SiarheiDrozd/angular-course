@@ -4,6 +4,8 @@
 </div>
 <ul>
   <li *ngFor="let course of courses">
-    <app-course-block [course]="course"></app-course-block>
+    <app-course-block [course]="course"
+                      (courseDeleted)="handleCourseDelete($event)">
+    </app-course-block>
   </li>
 </ul>

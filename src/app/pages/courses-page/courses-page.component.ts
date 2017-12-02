@@ -7,7 +7,7 @@ import {Component, OnInit} from '@angular/core';
 })
 
 export class CoursesPageComponent implements OnInit {
-  public courses: object[];
+  public courses: Object[];
   private dummyText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
       sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -18,12 +18,12 @@ export class CoursesPageComponent implements OnInit {
     {
       type: 'button',
       label: 'edit course',
-      event: 'some event'
+      event: 'edit'
     },
     {
       type: 'button',
       label: 'delete',
-      event: 'some event'
+      event: 'delete'
     }
   ];
 
@@ -55,9 +55,18 @@ export class CoursesPageComponent implements OnInit {
         duration: '4533000',
         date: new Date(),
         description: this.dummyText,
-        controls: undefined
+        controls: [
+          {
+            type: 'button',
+            label: 'some unknown event',
+            event: 'someEvent'
+          }
+        ]
       },
     ];
   }
 
+  handleCourseDelete(id) {
+    console.log('deleteHandler: ', id);
+  }
 }
