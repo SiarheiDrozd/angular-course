@@ -1,0 +1,8 @@
+.courses_search-form {
+  display: inline-block;
+  margin: 10px 0;
+}
+.courses_add-course-button {
+  display: inline-block;
+  vertical-align: middle;
+}

@@ -1,8 +1,8 @@
 export interface CourseBlockInterface {
   id: string;
   title: string;
-  date: Date;
-  duration: number;
+  date: string;
+  duration: string;
   description: string;
   controls?: object[];
 }
