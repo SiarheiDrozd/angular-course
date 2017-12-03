@@ -15,7 +15,7 @@
   <div *ngIf="course.controls"
        class="course-block_controls inline-block float-right">
     <button *ngFor="let control of course.controls"
-            class="button course-block_button"
+            class="button course-block_button capitalize"
             (click)="controlEvent(control.event)">
       {{control.label}}
     </button>

@@ -1,6 +1,8 @@
-<app-logo class="float-left"></app-logo>
-<button class="button">Courses</button>
-<p class="float-right">
-  <span>user login</span>
-  <a href="login" class="block">logoff</a>
-</p>
+<div class="header_content clearfix">
+  <app-logo class="header_logo"></app-logo>
+  <app-breadcrumbs class="header_breadcrumbs" [path]="path"></app-breadcrumbs>
+  <div class="header_login-block">
+    <span>User Name</span>
+    <a href="/login" class="block">logoff</a>
+  </div>
+</div>
