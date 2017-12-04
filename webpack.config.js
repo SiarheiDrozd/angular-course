@@ -10,6 +10,7 @@ const postcssUrl = require('postcss-url');
 const cssnano = require('cssnano');
 const customProperties = require('postcss-custom-properties');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin } = require('webpack');
 const { NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin } = require('@angular/cli/plugins/webpack');
@@ -97,7 +98,7 @@ module.exports = (env = {}) => {
       "./src\\polyfills.ts"
     ],
     "styles": [
-      "./src\\styles.css"
+      "./src\\styles.less"
     ]
   },
   "output": {
@@ -140,7 +141,7 @@ module.exports = (env = {}) => {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "src\\styles.css")
+          path.join(process.cwd(), "src\\styles.less")
         ],
         "test": /\.css$/,
         "use": [
@@ -164,7 +165,7 @@ module.exports = (env = {}) => {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "src\\styles.css")
+          path.join(process.cwd(), "src\\styles.less")
         ],
         "test": /\.scss$|\.sass$/,
         "use": [
@@ -196,9 +197,13 @@ module.exports = (env = {}) => {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "src\\styles.css")
+          path.join(process.cwd(), "src\\styles.less")
         ],
         "test": /\.less$/,
+        // use: ExtractTextPlugin.extract({
+        //   fallback: 'style-loader',
+        //   use: ['css-loader', 'less-loader']
+        // }),
         "use": [
           "exports-loader?module.exports.toString()",
           {
@@ -226,7 +231,7 @@ module.exports = (env = {}) => {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "src\\styles.css")
+          path.join(process.cwd(), "src\\styles.less")
         ],
         "test": /\.styl$/,
         "use": [
@@ -257,7 +262,7 @@ module.exports = (env = {}) => {
       },
       {
         "include": [
-          path.join(process.cwd(), "src\\styles.css")
+          path.join(process.cwd(), "src\\styles.less")
         ],
         "test": /\.css$/,
         "use": [
@@ -281,7 +286,7 @@ module.exports = (env = {}) => {
       },
       {
         "include": [
-          path.join(process.cwd(), "src\\styles.css")
+          path.join(process.cwd(), "src\\styles.less")
         ],
         "test": /\.scss$|\.sass$/,
         "use": [
@@ -313,7 +318,7 @@ module.exports = (env = {}) => {
       },
       {
         "include": [
-          path.join(process.cwd(), "src\\styles.css")
+          path.join(process.cwd(), "src\\styles.less")
         ],
         "test": /\.less$/,
         "use": [
@@ -343,7 +348,7 @@ module.exports = (env = {}) => {
       },
       {
         "include": [
-          path.join(process.cwd(), "src\\styles.css")
+          path.join(process.cwd(), "src\\styles.less")
         ],
         "test": /\.styl$/,
         "use": [

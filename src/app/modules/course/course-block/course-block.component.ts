@@ -5,7 +5,7 @@ import {CourseBlockInterface} from './course-block.interface';
 @Component({
   selector: 'app-course-block',
   templateUrl: './course-block.component.html',
-  styleUrls: ['./course-block.component.css']
+  styleUrls: ['./course-block.component.less']
 })
 export class CourseBlockComponent implements OnInit {
   @Input('course') course: CourseBlockInterface;
