@@ -1,13 +1,4 @@
-.courses_control-block {
+.courses_toolbox {
+  display: block;
   padding: 10px 0;
-}
-
-.courses_search-form {
-  display: inline-block;
-}
-
-.courses_add-course-button {
-  display: inline-block;
-  margin-right: auto;
-  vertical-align: middle;
 }

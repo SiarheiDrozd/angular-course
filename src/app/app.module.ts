@@ -14,6 +14,7 @@ import { CoursesPageComponent } from './pages/courses-page/courses-page.componen
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { SearchFormComponent } from './components/common/search-form/search-form.component';
 import { BreadcrumbsComponent } from './components/common/breadcrumbs/breadcrumbs.component';
+import { ToolboxComponent } from './components/toolbox/toolbox.component';
 
 const appRoutes: Routes = [
   { path: 'courses', component: CoursesPageComponent },
@@ -36,7 +37,8 @@ const appRoutes: Routes = [
     CoursesPageComponent,
     PageNotFoundComponent,
     SearchFormComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    ToolboxComponent
   ],
   imports: [
     FormsModule,
