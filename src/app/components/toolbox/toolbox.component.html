@@ -1,2 +1,13 @@
-<app-search-form class="toolbox_search-form float-left"></app-search-form>
+<form class="toolbox_search-form float-left">
+  <label for="searchValue">
+    <input id="searchValue"
+           type="text"
+           placeholder="name fragment or date"
+           [(ngModel)]="searchKey"
+           [ngModelOptions]="{standalone: true}">
+  </label>
+  <button (click)="search(searchKey)">
+    Find
+  </button>
+</form>
 <button class="toolbox_add-course-button capitalize float-right">add course</button>

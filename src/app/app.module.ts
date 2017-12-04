@@ -12,7 +12,6 @@ import { LogoComponent } from './components/common/logo/logo.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { CoursesPageComponent } from './pages/courses-page/courses-page.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { SearchFormComponent } from './components/common/search-form/search-form.component';
 import { BreadcrumbsComponent } from './components/common/breadcrumbs/breadcrumbs.component';
 import { ToolboxComponent } from './components/toolbox/toolbox.component';
 
@@ -36,7 +35,6 @@ const appRoutes: Routes = [
     LoginPageComponent,
     CoursesPageComponent,
     PageNotFoundComponent,
-    SearchFormComponent,
     BreadcrumbsComponent,
     ToolboxComponent
   ],

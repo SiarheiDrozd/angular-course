@@ -16,6 +16,7 @@ export class CourseBlockComponent implements OnInit {
 
   ngOnInit() {
   }
+
   controlEvent(eventType) {
     switch (eventType) {
       case 'edit':
