@@ -62,3 +62,25 @@
   display: inline-block;
   font-size: 1rem;
 }
+
+.magic-underline {
+  @underline-height: 2px;
+
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    display: block;
+    top: calc(~"100%" - @underline-height);
+    left: 0;
+    height: @underline-height;
+    width: 0;
+    background: @green;
+    transition: .25s ease;
+
+    :hover& {
+      width: 100%;
+    }
+  }
+}
