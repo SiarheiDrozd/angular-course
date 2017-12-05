@@ -1,14 +1,14 @@
 <section id="{{course.id}}"
          class="course-block clearfix">
   <div class="course-block_description inline-block float-left">
-    <h2 class="inline-block capitalize">
-      {{course.title}}
-      <span>{{course.id}}</span>
-      <span>{{course.duration | date : "hh:mm:ss" : "UTC"}}</span>
-    </h2>
-    <span class="float-right">
-      {{course.date | date}}
-    </span>
+    <header class="course-block_header">
+      <h2 class="heading capitalize">
+        {{course.title}}
+        <span>{{course.id}}</span>
+      </h2>
+      <span>{{course.duration}}min</span>
+      <span class="float-right">{{course.date | date}}</span>
+    </header>
     <p>
       {{course.description}}
     </p>

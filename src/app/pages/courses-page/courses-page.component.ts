@@ -39,7 +39,7 @@ export class CoursesPageComponent implements OnInit {
       new Course(
         '1',
         'video course',
-        '4533000',
+        120,
         '1 Jan 1991',
         this.dummyText,
         this.defaultControls
@@ -47,7 +47,7 @@ export class CoursesPageComponent implements OnInit {
       new Course(
         '2',
         'video course',
-        '4533000',
+        15,
         '832290375902',
         this.dummyText,
         this.defaultControls
@@ -55,7 +55,7 @@ export class CoursesPageComponent implements OnInit {
         new Course(
         '3',
         'video course',
-        '4533000',
+        65,
         new Date().toString(),
         this.dummyText,
         [
