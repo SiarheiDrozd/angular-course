@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { CourseModule } from './modules/course/course.module';
+
+import { CoursesPageModule } from './pages/courses-page/courses-page.module';
 
 import { AppComponent } from './app.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -13,7 +14,6 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { CoursesPageComponent } from './pages/courses-page/courses-page.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { BreadcrumbsComponent } from './components/common/breadcrumbs/breadcrumbs.component';
-import { ToolboxComponent } from './components/toolbox/toolbox.component';
 
 const appRoutes: Routes = [
   { path: 'courses', component: CoursesPageComponent },
@@ -33,14 +33,12 @@ const appRoutes: Routes = [
     ButtonComponent,
     LogoComponent,
     LoginPageComponent,
-    CoursesPageComponent,
     PageNotFoundComponent,
-    BreadcrumbsComponent,
-    ToolboxComponent
+    BreadcrumbsComponent
   ],
   imports: [
     FormsModule,
-    CourseModule,
+    CoursesPageModule,
     BrowserModule,
     RouterModule.forRoot(appRoutes)
   ],
