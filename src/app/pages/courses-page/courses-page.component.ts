@@ -10,6 +10,10 @@ import {Course} from "../../modules/course/course-block/course-block.class";
 
 export class CoursesPageComponent implements OnInit {
   protected courses: Course[];
+  private showModal: boolean = false;
+  private modalHeading: string = '';
+  private modalMessage: string = '';
+  private currentCourseId: string;
 
   constructor(private coursesPageService: CoursesPageService) {
   }
@@ -23,6 +27,16 @@ export class CoursesPageComponent implements OnInit {
   }
 
   handleCourseDelete(id) {
-    this.courses = this.coursesPageService.deleteCourse(id);
+    this.currentCourseId = id;
+    this.modalHeading = 'Do you really want to delete this course?';
+    this.modalMessage = this.coursesPageService.getCourseById(id).title + ' ' + id;
+    this.showModal = true;
+  }
+
+  handleModalResult(result: boolean) {
+    this.showModal = false;
+    if(result) {
+      this.courses = this.coursesPageService.deleteCourse(this.currentCourseId);
+    }
   }
 }

@@ -6,3 +6,8 @@
     </app-course-block>
   </li>
 </ul>
+<app-modal *ngIf="showModal"
+           [heading]="modalHeading"
+           [message]="modalMessage"
+           (result)="handleModalResult($event)">
+</app-modal>

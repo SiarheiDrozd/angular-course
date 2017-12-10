@@ -5,7 +5,9 @@ import { CourseModule } from '../../modules/course/course.module';
 
 import { CoursesPageComponent } from './courses-page.component';
 import { CoursesPageService } from './courses-page.service';
-import { ToolboxComponent } from "../../components/toolbox/toolbox.component";
+import { ToolboxComponent } from '../../components/toolbox/toolbox.component';
+
+import { ModalComponent } from "../../components/common/modal/modal.component";
 
 @NgModule({
   imports: [
@@ -15,11 +17,13 @@ import { ToolboxComponent } from "../../components/toolbox/toolbox.component";
   ],
   declarations: [
     CoursesPageComponent,
-    ToolboxComponent
+    ToolboxComponent,
+    ModalComponent
   ],
   exports: [
     CoursesPageComponent,
-    ToolboxComponent
+    ToolboxComponent,
+    ModalComponent
   ],
   providers: [
     CoursesPageService
