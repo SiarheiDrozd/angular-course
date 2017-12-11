@@ -6,19 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.less']
 })
 export class HeaderComponent implements OnInit {
-  path: Object[];
+  path: object;
 
   constructor() {
 
   }
 
   ngOnInit() {
-    this.path = [
-      {
-          name: 'Courses',
-          path: 'courses'
-      }
-    ]
+    this.path = {
+      name: 'Courses',
+      path: 'courses'
+    }
   }
 
 }

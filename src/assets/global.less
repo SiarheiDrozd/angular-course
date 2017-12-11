@@ -3,6 +3,59 @@
   src: url('./fonts/Roboto/Roboto-Regular.ttf');
 }
 
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  background: #f5f5f5;
+  font-family: 'Roboto', sans-serif;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: #26a69a;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.wrapper {
+  display: table;
+}
+
+.header,
+.main,
+.footer {
+  display: table-row;
+  position: relative;
+}
+
+.header {
+}
+
+.main {
+  height: 100%;
+}
+
+.footer {
+}
+
 .button {
   border: none;
   border-radius: @border-radius-s;

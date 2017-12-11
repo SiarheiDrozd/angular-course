@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {CoursesPageService} from './courses-page.service';
-import {Course} from "../../components/course/course-block/course-block.class";
+import {Course} from "../../modules/course/course-block/course-block.class";
 
 @Component({
   selector: 'app-courses-page',
   templateUrl: './courses-page.component.html',
-  styleUrls: ['./courses-page.component.css']
+  styleUrls: ['./courses-page.component.less']
 })
 
 export class CoursesPageComponent implements OnInit {
