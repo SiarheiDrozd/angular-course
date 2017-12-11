@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CoursesPageService} from './courses-page.service';
-import {Course} from "../../modules/course/course-block/course-block.class";
+import {Course} from "../../components/course/course-block/course-block.class";
 
 @Component({
   selector: 'app-courses-page',

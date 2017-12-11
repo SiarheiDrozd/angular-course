@@ -8,12 +8,12 @@ import { CoursesPageModule } from './pages/courses-page/courses-page.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-import { ButtonComponent } from './components/common/button/button.component';
-import { LogoComponent } from './components/common/logo/logo.component';
+import { ButtonComponent } from './components/button/button.component';
+import { LogoComponent } from './components/logo/logo.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { CoursesPageComponent } from './pages/courses-page/courses-page.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { BreadcrumbsComponent } from './components/common/breadcrumbs/breadcrumbs.component';
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 
 const appRoutes: Routes = [
   { path: 'courses', component: CoursesPageComponent },

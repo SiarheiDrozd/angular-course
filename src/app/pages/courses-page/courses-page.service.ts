@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Course} from '../../modules/course/course-block/course-block.class';
+import {Course} from '../../components/course/course-block/course-block.class';
 
 @Injectable()
 export class CoursesPageService {
