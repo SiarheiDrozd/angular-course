@@ -10,15 +10,18 @@ import {Course} from "../../modules/course/course-block/course-block.class";
 
 export class CoursesPageComponent implements OnInit {
   protected courses: Course[];
-  private showModal: boolean = false;
-  private modalHeading: string = '';
-  private modalMessage: string = '';
+  private showModal: boolean;
+  private modalHeading: string;
+  private modalMessage: string;
   private currentCourseId: string;
 
   constructor(private coursesPageService: CoursesPageService) {
   }
 
   ngOnInit() {
+    this.showModal = false;
+    this.modalHeading = '';
+    this.modalMessage = '';
     this.getCourses();
   }
 
