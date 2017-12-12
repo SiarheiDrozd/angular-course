@@ -73,13 +73,14 @@
     position: absolute;
     display: block;
     top: calc(~"100%" - @underline-height);
-    left: 0;
+    left: 50%;
     height: @underline-height;
     width: 0;
     background: @green;
     transition: .25s ease;
 
     :hover& {
+      left: 0;
       width: 100%;
     }
   }

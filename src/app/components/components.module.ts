@@ -7,8 +7,9 @@ import { HeaderComponent } from './header/header.component';
 import { ButtonComponent } from './button/button.component';
 import { LogoComponent } from './logo/logo.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-import { ModalComponent } from "./modal/modal.component";
-import { ToolboxComponent } from "./toolbox/toolbox.component";
+import { ModalComponent } from './modal/modal.component';
+import { ToolboxComponent } from './toolbox/toolbox.component';
+import { LoginFormComponent } from './login-form/login-form.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { ToolboxComponent } from "./toolbox/toolbox.component";
     LogoComponent,
     BreadcrumbsComponent,
     ModalComponent,
-    ToolboxComponent
+    ToolboxComponent,
+    LoginFormComponent
   ],
   exports: [
     FooterComponent,
@@ -31,7 +33,8 @@ import { ToolboxComponent } from "./toolbox/toolbox.component";
     LogoComponent,
     BreadcrumbsComponent,
     ModalComponent,
-    ToolboxComponent
+    ToolboxComponent,
+    LoginFormComponent
   ]
 })
 export class ComponentsModule { }
