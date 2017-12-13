@@ -1,0 +1,86 @@
+.wrapper {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  max-width: 800px;
+  min-width: 340px;
+}
+
+.clearfix:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.inline {
+  display: inline;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.block {
+  display: block;
+}
+
+.vertical-align_parent:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.table-cell {
+  display: table-cell;
+}
+
+.align-middle {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.inline-list {
+  font-size: 0;
+}
+
+.inline-list > * {
+  display: inline-block;
+  font-size: 1rem;
+}
+
+.magic-underline {
+  @underline-height: 2px;
+
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    display: block;
+    top: calc(~"100%" - @underline-height);
+    left: 0;
+    height: @underline-height;
+    width: 0;
+    background: @green;
+    transition: .25s ease;
+
+    :hover& {
+      width: 100%;
+    }
+  }
+}

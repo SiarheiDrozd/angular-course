@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('./fonts/Roboto/Roboto-Regular.ttf');
+}
+
+.button {
+  border: none;
+  border-radius: 2px;
+  padding: 10px;
+  background: #26a69a;
+  color: #ffffff;
+  height: @height-button;
+}
+
+.button:hover {
+  background: lighten(@green, 10%);
+}
+
+.input[type="text"] {
+  height: @height-input;
+  padding: 5px 20px;
+  border: none;
+}
