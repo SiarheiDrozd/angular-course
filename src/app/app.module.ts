@@ -5,11 +5,11 @@ import { FormsModule } from '@angular/forms';
 
 import { ComponentsModule } from './components/components.module';
 import { CoursesPageModule, CoursesPageComponent } from './pages/courses-page/courses-page.module';
+import { LoginPageModule, LoginPageComponent } from './pages/login-page/login-page.module';
 
 import { AuthenticationService } from './services/authentication/authentication.service';
 
 import { AppComponent } from './app.component';
-import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
@@ -25,7 +25,6 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPageComponent,
     PageNotFoundComponent,
   ],
   imports: [
@@ -33,6 +32,7 @@ const appRoutes: Routes = [
     FormsModule,
     ComponentsModule,
     CoursesPageModule,
+    LoginPageModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [

@@ -15,7 +15,6 @@ export class LoginPageComponent implements OnInit {
     this.path = {
       name: 'login-page',
       path: 'login'
-    }
+    };
   }
-
 }

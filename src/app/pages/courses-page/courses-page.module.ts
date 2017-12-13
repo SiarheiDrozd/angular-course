@@ -29,4 +29,4 @@ class CoursesPageModule { }
 export {
   CoursesPageModule,
   CoursesPageComponent
-}
+};
