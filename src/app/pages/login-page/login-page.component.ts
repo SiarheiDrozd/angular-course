@@ -7,14 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPageComponent implements OnInit {
 
-  public path: object;
-
   constructor() { }
 
   ngOnInit() {
-    this.path = {
-      name: 'login-page',
-      path: 'login'
-    };
   }
 }

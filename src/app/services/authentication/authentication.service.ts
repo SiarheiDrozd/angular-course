@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
+import { User } from './user-interface';
 
 @Injectable()
-export class AuthenticationService {
+class AuthenticationService {
 
   constructor() { }
 
-  login(user) {
+  login(user: User): void {
     window.localStorage.setItem('user', JSON.stringify(user));
   }
 
-  logout() {
+  logout(): void {
     window.localStorage.removeItem('user');
   }
 
@@ -17,7 +18,12 @@ export class AuthenticationService {
     return !!window.localStorage.getItem('user');
   }
 
-  getUserInfo(): object {
+  getUserInfo(): User {
     return JSON.parse(window.localStorage.getItem('user'));
   }
 }
+
+export {
+  AuthenticationService,
+  User
+};

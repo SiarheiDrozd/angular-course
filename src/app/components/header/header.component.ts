@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {AuthenticationService} from '../../services/authentication/authentication.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthenticationService, User} from '../../services/authentication/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -9,17 +9,12 @@ import {AuthenticationService} from '../../services/authentication/authenticatio
 })
 export class HeaderComponent implements OnInit {
 
-  path: object;
-  private user: object;
+  private user: User;
 
   constructor(private _authService: AuthenticationService) {
   }
 
   ngOnInit() {
-    this.path = {
-      name: 'Courses',
-      path: 'courses'
-    };
     this.user = this._authService.getUserInfo();
   }
 
