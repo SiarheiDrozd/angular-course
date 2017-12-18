@@ -1,75 +1,45 @@
 import {Component, OnInit} from '@angular/core';
-import {Course} from '../../modules/course/course-block/course-block.class';
+import {CoursesPageService} from './courses-page.service';
+import {Course} from "../../modules/course/course-block/course-block.class";
 
 @Component({
   selector: 'app-courses-page',
   templateUrl: './courses-page.component.html',
-  styleUrls: ['./courses-page.component.css']
+  styleUrls: ['./courses-page.component.less']
 })
 
 export class CoursesPageComponent implements OnInit {
-  public courses: Course[];
-  private dummyText: string;
-  private defaultControls: Object[];
+  protected courses: Course[];
+  private showModal: boolean;
+  private modalHeading: string;
+  private modalMessage: string;
+  private currentCourseId: string;
 
-  constructor() {
-    this.courses = [];
+  constructor(private coursesPageService: CoursesPageService) {
   }
 
   ngOnInit() {
-    this.dummyText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-      nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-      deserunt mollit anim id est laborum.`;
-    this.defaultControls = [
-      {
-        type: 'button',
-        label: 'edit course',
-        event: 'edit'
-      },
-      {
-        type: 'button',
-        label: 'delete',
-        event: 'delete'
-      }
-    ];
-    this.courses = [
-      new Course(
-        '1',
-        'video course',
-        120,
-        '1 Jan 1991',
-        this.dummyText,
-        this.defaultControls
-      ),
-      new Course(
-        '2',
-        'video course',
-        15,
-        '832290375902',
-        this.dummyText,
-        this.defaultControls
-      ),
-        new Course(
-        '3',
-        'video course',
-        65,
-        new Date().toString(),
-        this.dummyText,
-        [
-          {
-            type: 'button',
-            label: 'some unknown event',
-            event: 'someEvent'
-          }
-        ]
-      ),
-    ];
+    this.showModal = false;
+    this.modalHeading = '';
+    this.modalMessage = '';
+    this.getCourses();
+  }
+
+  getCourses() {
+    this.courses = this.coursesPageService.getCourses();
   }
 
   handleCourseDelete(id) {
-    console.log('deleteHandler: ', id);
+    this.currentCourseId = id;
+    this.modalHeading = 'Do you really want to delete this course?';
+    this.modalMessage = this.coursesPageService.getCourseById(id).title + ' ' + id;
+    this.showModal = true;
+  }
+
+  handleModalResult(result: boolean) {
+    this.showModal = false;
+    if(result) {
+      this.courses = this.coursesPageService.deleteCourse(this.currentCourseId);
+    }
   }
 }

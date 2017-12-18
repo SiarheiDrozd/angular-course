@@ -1,0 +1,19 @@
+<section class="modal"
+  (click)="close($event)">
+  <div class="modal_wrapper">
+    <h2 class="modal_heading">
+      {{heading}}
+    </h2>
+    <p class="modal_message">
+      {{message}}
+    </p>
+    <button class="modal_button button float-left"
+      (click)="emitConfirm($event)">
+      Yes
+    </button>
+    <button class="modal_button button float-right"
+      (click)="emitDecline($event)">
+      No
+    </button>
+  </div>
+</section>

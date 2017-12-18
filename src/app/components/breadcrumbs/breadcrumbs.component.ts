@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -7,20 +7,18 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class BreadcrumbsComponent implements OnInit {
 
-  @Input('path') path: Object[];
+  @Input() paths: Object;
 
   constructor() {
-    this.path = null;
+    this.paths = null;
   }
 
   ngOnInit() {
-    if(!this.path) {
-      this.path = [
-          {
-            name: 'Courses',
-            path: 'courses'
-          }
-      ]
+    if (!this.paths) {
+      this.paths = {
+        name: 'Courses',
+        path: 'courses'
+      }
     }
   }
 

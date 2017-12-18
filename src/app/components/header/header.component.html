@@ -1,8 +1,8 @@
 <div class="header_content vertical-align_parent inline-list clearfix">
   <app-logo class="header_logo"></app-logo>
-  <app-breadcrumbs class="header_breadcrumbs" [path]="path"></app-breadcrumbs>
+  <app-breadcrumbs class="header_breadcrumbs"></app-breadcrumbs>
   <div class="header_login-block">
-    <span>User Name</span>
+    <span>{{user.name}}</span>
     <a href="/login" class="block">logoff</a>
   </div>
 </div>
