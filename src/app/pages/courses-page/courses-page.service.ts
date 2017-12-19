@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Course} from '../../modules/course/course-block/course-block.class';
 import { COURSES } from './courses-page.data';
+// const COURSES = null;
 
 @Injectable()
 export class CoursesPageService {
@@ -12,7 +13,11 @@ export class CoursesPageService {
   }
 
   private loadCourses(): Course[] {
-    return COURSES.map(courseData => this.createCourse(courseData));
+    if (COURSES && Array.isArray(COURSES)) {
+      return COURSES.map(courseData => this.createCourse(courseData));
+    } else {
+      return null;
+    }
   }
 
   private getCourseIndex(course: Course): number {
@@ -29,7 +34,7 @@ export class CoursesPageService {
       courseData.id,
       courseData.title,
       courseData.duration,
-      courseData.date,
+      new Date(courseData.date),
       courseData.description,
       courseData.controls);
   }

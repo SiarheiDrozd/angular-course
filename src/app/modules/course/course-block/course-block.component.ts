@@ -1,6 +1,6 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 
-import {CourseBlockInterface} from './course-block.interface';
+// import {CourseBlockInterface} from './course-block.interface';
 
 @Component({
   selector: 'app-course-block',
@@ -8,8 +8,9 @@ import {CourseBlockInterface} from './course-block.interface';
   styleUrls: ['./course-block.component.less']
 })
 export class CourseBlockComponent implements OnInit {
-  @Input('course') course: CourseBlockInterface;
+  @Input('course') course;
   @Output() courseDeleted = new EventEmitter();
+  @Output() courseRated = new EventEmitter();
 
   constructor() {
   }

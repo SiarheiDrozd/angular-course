@@ -42,4 +42,17 @@ export class CoursesPageComponent implements OnInit {
       this.courses = this.coursesPageService.deleteCourse(this.currentCourseId);
     }
   }
+
+  isFreshCourse(course): boolean {
+    let today = new Date(),
+      courseDate = course.date;
+    return (courseDate < today) && (courseDate >= new Date().setDate(today.getDate() - 14));
+  }
+
+  isUpcommingCourse(course): boolean {
+    let today = new Date(),
+      courseDate = course.date;
+    return courseDate > today;
+  }
+
 }

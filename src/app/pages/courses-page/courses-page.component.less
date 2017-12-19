@@ -1,4 +1,35 @@
+@import "../../../assets/variables.less";
+
 .courses_toolbox {
   display: block;
   padding: 10px 0;
 }
+
+.no-courses-block {
+  width: 100%;
+  background: @white;
+  text-align: center;
+  height: @height-text-big;
+  line-height: @height-text-big;
+}
+
+.course-block {
+
+  transition: all 0.5s ease;
+
+  &.course-block_green {
+    box-shadow: -10px 0 0 3px @green;
+
+    &:hover {
+      box-shadow: -20px 0 0 3px @green;
+    }
+  }
+
+  &.course-block_blue {
+    box-shadow: -10px 0 0 3px @blue;
+    &:hover {
+      box-shadow: -20px 0 0 3px @blue;
+    }
+  }
+}
+
