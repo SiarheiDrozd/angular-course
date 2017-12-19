@@ -36,7 +36,9 @@ export class CoursesPageService {
       courseData.duration,
       new Date(courseData.date),
       courseData.description,
-      courseData.controls);
+      courseData.controls,
+      courseData.topRated,
+      );
   }
 
   addCourse(course: Course): Course[] {

@@ -42,6 +42,7 @@ export const COURSES: object[] = [
     date: today.toString(),
     description: DUMMY_TEXT,
     controls: DEFAULT_CONTROLLS,
+    topRated: true,
   },
   {
     id: '4',

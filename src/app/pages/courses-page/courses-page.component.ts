@@ -55,4 +55,8 @@ export class CoursesPageComponent implements OnInit {
     return courseDate > today;
   }
 
+  rateCourse(course) {
+    course.topRated = !course.topRated;
+    this.coursesPageService.updateCourse(course);
+  }
 }

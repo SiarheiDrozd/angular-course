@@ -42,4 +42,8 @@ export class CourseBlockComponent implements OnInit {
   emitDelete() {
     this.courseDeleted.emit(this.course.id);
   }
+
+  rateCourse() {
+    this.courseRated.emit(this.course);
+  }
 }
