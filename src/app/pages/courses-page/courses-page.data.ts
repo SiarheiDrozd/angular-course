@@ -16,7 +16,7 @@ const DEFAULT_CONTROLLS = [
     event: 'delete'
   }
 ];
-let today = new Date();
+const TODAY = new Date();
 
 export const COURSES: object[] = [
   {
@@ -39,7 +39,7 @@ export const COURSES: object[] = [
     id: '3',
     title: 'video course',
     duration: 65,
-    date: today.toString(),
+    date: TODAY.toString(),
     description: DUMMY_TEXT,
     controls: DEFAULT_CONTROLLS,
     topRated: true,
@@ -48,7 +48,7 @@ export const COURSES: object[] = [
     id: '4',
     title: 'video course',
     duration: 15,
-    date: today.setDate(today.getDate() + 1),
+    date: TODAY.setDate(TODAY.getDate() + 1),
     description: DUMMY_TEXT,
     controls: DEFAULT_CONTROLLS,
   },
