@@ -6,6 +6,7 @@ import { ComponentsModule } from '../../components/components.module';
 
 import { CoursesPageComponent } from './courses-page.component';
 import { CoursesPageService } from './courses-page.service';
+import { OrderByPipe } from '../../pipes';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { CoursesPageService } from './courses-page.service';
     ComponentsModule
   ],
   declarations: [
-    CoursesPageComponent
+    CoursesPageComponent,
+    OrderByPipe
   ],
   exports: [
     CoursesPageComponent

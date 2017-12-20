@@ -10,7 +10,7 @@
           class="no-courses-block">
         No data. Feel free to add new course.
       </li>
-      <li *ngFor="let course of courses">
+      <li *ngFor="let course of courses | orderBy:'date'">
         <app-course-block [course]="course"
                           class="block course-block"
                           [ngClass]="{
