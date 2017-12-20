@@ -4,7 +4,8 @@
   </header>
 
   <main class="main">
-    <app-toolbox class="courses_toolbox clearfix vertical-align_parent"></app-toolbox>
+    <app-toolbox class="courses_toolbox clearfix vertical-align_parent"
+                 (filter)="filterList($event)"></app-toolbox>
     <ul class="courses">
       <li *ngIf="!courses"
           class="no-courses-block">

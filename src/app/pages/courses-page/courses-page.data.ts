@@ -21,7 +21,7 @@ const TODAY = new Date();
 export const COURSES: object[] = [
   {
     id: '1',
-    title: 'video course',
+    title: 'How to do JS',
     duration: 120,
     date: '1 Jan 1991',
     description: DUMMY_TEXT,
@@ -29,7 +29,7 @@ export const COURSES: object[] = [
   },
   {
     id: '2',
-    title: 'video course',
+    title: 'Generate hash',
     duration: 15,
     date: '12/18/2017',
     description: DUMMY_TEXT,
@@ -37,7 +37,7 @@ export const COURSES: object[] = [
   },
   {
     id: '3',
-    title: 'video course',
+    title: 'video course 4',
     duration: 65,
     date: TODAY.toString(),
     description: DUMMY_TEXT,
@@ -46,7 +46,7 @@ export const COURSES: object[] = [
   },
   {
     id: '4',
-    title: 'video course',
+    title: 'video course 2',
     duration: 15,
     date: TODAY.setDate(TODAY.getDate() + 1),
     description: DUMMY_TEXT,

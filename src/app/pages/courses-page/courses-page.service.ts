@@ -29,6 +29,13 @@ export class CoursesPageService {
     return this.courses;
   }
 
+  filterCourses(filter): Course[] {
+    return this.courses.filter(course => {
+      const SEARCH = course.title.match(new RegExp(filter, 'gi'));
+      return SEARCH && SEARCH.length > 0;
+    });
+  }
+
   createCourse(courseData): Course {
     return new Course(
       courseData.id,

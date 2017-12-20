@@ -38,25 +38,29 @@ export class CoursesPageComponent implements OnInit {
 
   handleModalResult(result: boolean) {
     this.showModal = false;
-    if(result) {
+    if (result) {
       this.courses = this.coursesPageService.deleteCourse(this.currentCourseId);
     }
   }
 
   isFreshCourse(course): boolean {
-    let today = new Date(),
+    const TODAY = new Date(),
       courseDate = course.date;
-    return (courseDate < today) && (courseDate >= new Date().setDate(today.getDate() - 14));
+    return (courseDate < TODAY) && (courseDate >= new Date().setDate(TODAY.getDate() - 14));
   }
 
   isUpcommingCourse(course): boolean {
-    let today = new Date(),
+    const TODAY = new Date(),
       courseDate = course.date;
-    return courseDate > today;
+    return courseDate > TODAY;
   }
 
   rateCourse(course) {
     course.topRated = !course.topRated;
     this.coursesPageService.updateCourse(course);
+  }
+
+  filterList(filterValue) {
+    this.courses = this.coursesPageService.filterCourses(filterValue);
   }
 }
