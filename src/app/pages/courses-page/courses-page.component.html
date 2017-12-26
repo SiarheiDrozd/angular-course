@@ -3,7 +3,7 @@
     <app-header></app-header>
   </header>
 
-  <main class="main">
+  <main class="main courses-page">
     <app-toolbox class="courses_toolbox clearfix vertical-align_parent"
                  (filter)="filterList($event)"></app-toolbox>
     <ul class="courses">
@@ -19,14 +19,25 @@
                             'course-block_blue': isUpcommingCourse(course)
                           }"
                           (courseDeleted)="handleCourseDelete($event)"
+                          (courseEdited)="handleCourseEdit($event)"
                           (courseRated)="rateCourse($event)">
         </app-course-block>
       </li>
     </ul>
-    <app-modal *ngIf="showModal"
-               [heading]="modalHeading"
-               [message]="modalMessage"
+    <app-modal [(show)]="showDeleteModal"
                (result)="handleModalResult($event)">
+      <h2>
+        {{modalHeading}}
+      </h2>
+      <p class="modal_message">
+        {{modalMessage}}
+      </p>
+    </app-modal>
+    <app-modal [(show)]="showEditModal"
+               (result)="handleModalResult($event)">
+      <p class="modal_message">
+        edit form
+      </p>
     </app-modal>
   </main>
 

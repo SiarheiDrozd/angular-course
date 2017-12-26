@@ -10,7 +10,8 @@ import {Course} from '../../modules/course/course-block/course-block.class';
 
 export class CoursesPageComponent implements OnInit {
   protected courses: Course[];
-  private showModal: boolean;
+  private showDeleteModal: boolean;
+  private showEditModal: boolean;
   private modalHeading: string;
   private modalMessage: string;
   private currentCourseId: string;
@@ -19,7 +20,8 @@ export class CoursesPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.showModal = false;
+    this.showDeleteModal = false;
+    this.showEditModal = false;
     this.modalHeading = '';
     this.modalMessage = '';
     this.getCourses();
@@ -32,12 +34,16 @@ export class CoursesPageComponent implements OnInit {
   handleCourseDelete(id) {
     this.currentCourseId = id;
     this.modalHeading = 'Do you really want to delete this course?';
-    this.modalMessage = this.coursesPageService.getCourseById(id).title + ' ' + id;
-    this.showModal = true;
+    this.modalMessage = this.coursesPageService.getCourseById(id).title;
+    this.showDeleteModal = true;
+  }
+
+  handleCourseEdit(id) {
+    this.showEditModal = true;
   }
 
   handleModalResult(result: boolean) {
-    this.showModal = false;
+    this.showDeleteModal = false;
     if (result) {
       this.courses = this.coursesPageService.deleteCourse(this.currentCourseId);
     }

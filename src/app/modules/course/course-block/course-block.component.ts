@@ -1,7 +1,5 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 
-// import {CourseBlockInterface} from './course-block.interface';
-
 @Component({
   selector: 'app-course-block',
   templateUrl: './course-block.component.html',
@@ -10,6 +8,7 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 export class CourseBlockComponent implements OnInit {
   @Input('course') course;
   @Output() courseDeleted = new EventEmitter();
+  @Output() courseEdited = new EventEmitter();
   @Output() courseRated = new EventEmitter();
 
   constructor() {
@@ -18,25 +17,8 @@ export class CourseBlockComponent implements OnInit {
   ngOnInit() {
   }
 
-  controlEvent(eventType) {
-    switch (eventType) {
-      case 'edit':
-        this.emitEdit();
-        break;
-      case 'delete':
-        this.emitDelete();
-        break;
-      default:
-        this.emitUnknownEvent(eventType);
-    }
-  }
-
-  emitUnknownEvent(eventName) {
-    console.log('unknown event: ', eventName);
-  }
-
   emitEdit() {
-    console.log('edit: ', this.course.id);
+    this.courseEdited.emit(this.course.id);
   }
 
   emitDelete() {
