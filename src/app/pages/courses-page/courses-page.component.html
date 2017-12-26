@@ -18,25 +18,33 @@
                             'course-block_green': isFreshCourse(course),
                             'course-block_blue': isUpcommingCourse(course)
                           }"
-                          (courseDeleted)="handleCourseDelete($event)"
-                          (courseEdited)="handleCourseEdit($event)"
+                          (courseDeleted)="showDeleteModalWindow($event)"
+                          (courseEdited)="showEditModalWindow($event)"
                           (courseRated)="rateCourse($event)">
         </app-course-block>
       </li>
     </ul>
-    <app-modal [(show)]="showDeleteModal"
-               (result)="handleModalResult($event)">
+    <app-modal *ngIf="showDeleteModal"
+               (result)="handleDeleteCourse($event)">
       <h2>
         {{modalHeading}}
       </h2>
       <p class="modal_message">
-        {{modalMessage}}
+        {{courseToDelete.title}}
       </p>
     </app-modal>
-    <app-modal [(show)]="showEditModal"
-               (result)="handleModalResult($event)">
+    <app-modal *ngIf="showEditModal"
+               (result)="handleEditCourse($event)">
       <p class="modal_message">
-        edit form
+        <label>
+          Title:
+          <input type="text"
+                 class="input modal_input"
+                 [(ngModel)]="courseToEdit.title">
+        </label>
+        <label>
+          <textarea [(ngModel)]="courseToEdit.description"></textarea>
+        </label>
       </p>
     </app-modal>
   </main>

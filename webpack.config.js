@@ -480,21 +480,21 @@ module.exports = (env = {}) => {
       "async": "common"
     }),
     new NamedModulesPlugin({}),
-    new AotPlugin({
-      "tsConfigPath": 'src\\tsconfig.app.json',
-      "entryModule": 'src\\app\\app.module'
-    }),
-    // new AngularCompilerPlugin({
-    //   "mainPath": "main.ts",
-    //   "platform": 0,
-    //   "hostReplacementPaths": {
-    //     "environments\\environment.ts": "environments\\environment.ts"
-    //   },
-    //   "sourceMap": !env.production,
-    //   "tsConfigPath": "src\\tsconfig.app.json",
-    //   "skipCodeGeneration": true,
-    //   "compilerOptions": {}
-    // })
+    // new AotPlugin({
+    //   "tsConfigPath": 'src\\tsconfig.app.json',
+    //   "entryModule": 'src\\app\\app.module'
+    // }),
+    new AngularCompilerPlugin({
+      "mainPath": "main.ts",
+      "platform": 0,
+      "hostReplacementPaths": {
+        "environments\\environment.ts": "environments\\environment.ts"
+      },
+      "sourceMap": !env.production,
+      "tsConfigPath": "src\\tsconfig.app.json",
+      "skipCodeGeneration": true,
+      "compilerOptions": {}
+    })
   ],
   "node": {
     "fs": "empty",

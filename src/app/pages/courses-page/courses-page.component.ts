@@ -13,8 +13,9 @@ export class CoursesPageComponent implements OnInit {
   private showDeleteModal: boolean;
   private showEditModal: boolean;
   private modalHeading: string;
-  private modalMessage: string;
   private currentCourseId: string;
+  private courseToDelete: Course;
+  private courseToEdit: Course;
 
   constructor(private coursesPageService: CoursesPageService) {
   }
@@ -23,7 +24,6 @@ export class CoursesPageComponent implements OnInit {
     this.showDeleteModal = false;
     this.showEditModal = false;
     this.modalHeading = '';
-    this.modalMessage = '';
     this.getCourses();
   }
 
@@ -31,22 +31,31 @@ export class CoursesPageComponent implements OnInit {
     this.courses = this.coursesPageService.getCourses();
   }
 
-  handleCourseDelete(id) {
+  showDeleteModalWindow(id) {
     this.currentCourseId = id;
     this.modalHeading = 'Do you really want to delete this course?';
-    this.modalMessage = this.coursesPageService.getCourseById(id).title;
+    this.courseToDelete = this.coursesPageService.getCourseById(id);
     this.showDeleteModal = true;
   }
 
-  handleCourseEdit(id) {
+  showEditModalWindow(id) {
+    this.courseToEdit = {...this.coursesPageService.getCourseById(id)};
     this.showEditModal = true;
   }
 
-  handleModalResult(result: boolean) {
-    this.showDeleteModal = false;
+  handleDeleteCourse(result) {
     if (result) {
       this.courses = this.coursesPageService.deleteCourse(this.currentCourseId);
     }
+    this.showDeleteModal = false;
+  }
+
+  handleEditCourse(result) {
+    if (result) {
+      this.coursesPageService.updateCourse(this.courseToEdit);
+      this.getCourses();
+    }
+    this.showEditModal = false;
   }
 
   isFreshCourse(course): boolean {
