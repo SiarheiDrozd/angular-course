@@ -15,7 +15,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin } = require('webpack');
 const { NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin } = require('@angular/cli/plugins/webpack');
 const { CommonsChunkPlugin } = require('webpack').optimize;
-const { AngularCompilerPlugin } = require('@ngtools/webpack');
+const { AngularCompilerPlugin, AotPlugin } = require('@ngtools/webpack');
 
 const nodeModules = path.join(process.cwd(), 'node_modules');
 const realNodeModules = fs.realpathSync(nodeModules);
@@ -480,17 +480,21 @@ module.exports = (env = {}) => {
       "async": "common"
     }),
     new NamedModulesPlugin({}),
-    new AngularCompilerPlugin({
-      "mainPath": "main.ts",
-      "platform": 0,
-      "hostReplacementPaths": {
-        "environments\\environment.ts": "environments\\environment.ts"
-      },
-      "sourceMap": !env.production,
-      "tsConfigPath": "src\\tsconfig.app.json",
-      "skipCodeGeneration": true,
-      "compilerOptions": {}
-    })
+    new AotPlugin({
+      "tsConfigPath": 'src\\tsconfig.app.json',
+      "entryModule": 'src\\app\\app.module'
+    }),
+    // new AngularCompilerPlugin({
+    //   "mainPath": "main.ts",
+    //   "platform": 0,
+    //   "hostReplacementPaths": {
+    //     "environments\\environment.ts": "environments\\environment.ts"
+    //   },
+    //   "sourceMap": !env.production,
+    //   "tsConfigPath": "src\\tsconfig.app.json",
+    //   "skipCodeGeneration": true,
+    //   "compilerOptions": {}
+    // })
   ],
   "node": {
     "fs": "empty",
