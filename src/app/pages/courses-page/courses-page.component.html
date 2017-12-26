@@ -34,15 +34,17 @@
       </p>
     </app-modal>
     <app-modal *ngIf="showEditModal"
+               class="modal"
                (result)="handleEditCourse($event)">
       <p class="modal_message">
-        <label>
+        <label class="magic-underline block modal_label">
           Title:
           <input type="text"
                  class="input modal_input"
                  [(ngModel)]="courseToEdit.title">
         </label>
         <label>
+          Description:
           <textarea [(ngModel)]="courseToEdit.description"></textarea>
         </label>
       </p>
