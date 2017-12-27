@@ -1,14 +1,17 @@
 <div class="wrapper">
   <header class="header">
-    <app-header [hideBreadcrumbs]="true"></app-header>
+    <app-header [hideBreadcrumbs]="true"
+                [hideLogIn]="true">
+    </app-header>
   </header>
 
   <main class="main">
     <p>
-      Login Page content
-      <a href="courses">back to courses</a>
+      <a href="/courses">back to courses</a>
     </p>
-    <app-login-form class="align-middle"></app-login-form>
+    <app-login-form class="align-middle"
+                    (onLogin)="handleLogin($event)">
+    </app-login-form>
   </main>
 
   <footer class="footer">

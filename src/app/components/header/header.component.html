@@ -3,8 +3,19 @@
   <div class="header_breadcrumbs">
     <app-breadcrumbs *ngIf="!hideBreadcrumbs"></app-breadcrumbs>
   </div>
-  <div class="header_login-block">
-    <span>{{user.name}}</span>
-    <a href="/login" class="block">logoff</a>
+  <div *ngIf="!hideLogIn"
+       class="header_login-block">
+    <span>{{user?.name}}</span>
+    <a *ngIf="isLogged"
+       href=""
+       class="block"
+       (click)="logOff($event)">
+      log out
+    </a>
+    <a *ngIf="!isLogged"
+       href="/login"
+       class="block">
+      log in
+    </a>
   </div>
 </div>
