@@ -1,5 +1,5 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {AuthenticationService, User} from '../../services/authentication/authentication.service';
+import {AuthenticationService, User} from '../../services';
 
 @Component({
   selector: 'app-login-form',
