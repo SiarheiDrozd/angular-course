@@ -1,4 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
+import {Breadcrumb} from './breadcrumb';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -7,19 +8,29 @@ import {Component, OnInit, Input} from '@angular/core';
 })
 export class BreadcrumbsComponent implements OnInit {
 
-  @Input() paths: Object;
+  public path: Breadcrumb[];
 
   constructor() {
-    this.paths = null;
+    this.path = [];
   }
 
   ngOnInit() {
-    if (!this.paths) {
-      this.paths = {
-        name: 'Courses',
-        path: 'courses'
+    const ORIGIN = window.location.origin;
+    let pathArray = window.location.pathname.split('/');
+
+    console.log(pathArray);
+    this.path = pathArray.map(function (item, index) {
+      if (item === '') {
+        item = 'home';
       }
-    }
+
+      return {
+        href: ORIGIN + pathArray.slice(0, index + 1).join('/'),
+        displayName: item
+      };
+    });
+
+    console.log(this.path);
   }
 
 }
