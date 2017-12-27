@@ -45,7 +45,7 @@ export class CoursesPageComponent implements OnInit {
 
   handleDeleteCourse(result) {
     if (result) {
-      this.courses = this.coursesPageService.deleteCourse(this.currentCourseId);
+      this.courses = [...this.coursesPageService.deleteCourse(this.currentCourseId)];
     }
     this.showDeleteModal = false;
   }
@@ -76,6 +76,6 @@ export class CoursesPageComponent implements OnInit {
   }
 
   filterList(filterValue) {
-    this.courses = this.coursesPageService.filterCourses(filterValue);
+    this.courses = this.coursesPageService.filterCourses(filterValue, 'date');
   }
 }
