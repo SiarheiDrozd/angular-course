@@ -15,22 +15,19 @@ export class BreadcrumbsComponent implements OnInit {
   }
 
   ngOnInit() {
-    const ORIGIN = window.location.origin;
-    let pathArray = window.location.pathname.split('/');
+    const ORIGIN = window.location.origin,
+     PATH_ARRAY = window.location.pathname.split('/');
 
-    console.log(pathArray);
-    this.path = pathArray.map(function (item, index) {
+    this.path = PATH_ARRAY.map(function (item, index) {
       if (item === '') {
         item = 'home';
       }
 
       return {
-        href: ORIGIN + pathArray.slice(0, index + 1).join('/'),
+        href: ORIGIN + PATH_ARRAY.slice(0, index + 1).join('/'),
         displayName: item
       };
     });
-
-    console.log(this.path);
   }
 
 }
