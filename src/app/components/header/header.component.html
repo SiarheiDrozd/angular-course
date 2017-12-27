@@ -5,13 +5,13 @@
   </div>
   <div *ngIf="!hideLogIn"
        class="header_login-block">
-    <span>{{user.name}}</span>
-    <a *ngIf="isLogged"
-       href=""
-       class="block"
-       (click)="logOff($event)">
+    <span>{{user?.name}}</span>
+    <span *ngIf="isLogged"
+          tabindex="0"
+          class="block link"
+          (click)="logOff($event)">
       log out
-    </a>
+    </span>
     <a *ngIf="!isLogged"
        href="/login"
        class="block">
