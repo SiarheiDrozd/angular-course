@@ -73,10 +73,19 @@ a:hover {
   height: @height-input;
 }
 
-.input[type="text"] {
-  height: @height-input;
-  padding: @padding-s @padding-xl;
-  border: none;
+.input{
+
+  &[type="text"] {
+    height: @height-input;
+    padding: @padding-s @padding-xl;
+    border: none;
+  }
+
+  &[type="checkbox"] {
+    height: @height-input / 2;
+    padding: @padding-s @padding-xl;
+    border: none;
+  }
 }
 
 .link {

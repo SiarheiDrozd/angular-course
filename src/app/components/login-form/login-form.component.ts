@@ -15,8 +15,11 @@ export class LoginFormComponent implements OnInit {
   constructor(private _authService: AuthenticationService) {
     this.user = {
       name: 'User',
-      password: 'pass'
-    };
+      password: 'pass',
+      permitions: {
+        edit: false
+      }
+    }
   }
 
   ngOnInit() {

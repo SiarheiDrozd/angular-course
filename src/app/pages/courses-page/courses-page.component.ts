@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CoursesPageService} from './courses-page.service';
 import {Course} from '../../modules/course/course-block/course-block.class';
+import {AuthenticationService} from '../../services';
 
 @Component({
   selector: 'app-courses-page',
@@ -17,7 +18,8 @@ export class CoursesPageComponent implements OnInit {
   private courseToDelete: Course;
   private courseToEdit: Course;
 
-  constructor(private coursesPageService: CoursesPageService) {
+  constructor(private coursesPageService: CoursesPageService,
+              private _authService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -77,5 +79,12 @@ export class CoursesPageComponent implements OnInit {
 
   filterList(filterValue) {
     this.courses = this.coursesPageService.filterCourses(filterValue, 'date');
+  }
+
+  isLoggedWithPermition(): boolean {
+    const HAS_PERMITION = this._authService.getUserInfo() &&
+      this._authService.getUserInfo().permitions &&
+      this._authService.getUserInfo().permitions.edit;
+    return this._authService.isAuthenticated() && HAS_PERMITION;
   }
 }

@@ -20,6 +20,15 @@
            [(ngModel)]="user.password"
            required>
   </label>
+  <label class="magic-underline label block inline-list login-form_label vertical-align_parent">
+    <span class="login-form_label-text inline-block vertical-align_middle">
+      Edit permition
+    </span>
+    <input type="checkbox"
+           class="input login-form_input vertical-align_middle"
+           name="editPermition"
+           [(ngModel)]="user.permitions.edit">
+  </label>
   <input type="submit"
          value="Enter"
          class="button login-form_submit"

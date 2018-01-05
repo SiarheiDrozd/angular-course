@@ -13,6 +13,7 @@
       </li>
       <li *ngFor="let course of courses | orderBy:'date'">
         <app-course-block [course]="course"
+                          [loggedWithPermition]="isLoggedWithPermition()"
                           class="block course-block"
                           [ngClass]="{
                             'course-block_green': isFreshCourse(course),

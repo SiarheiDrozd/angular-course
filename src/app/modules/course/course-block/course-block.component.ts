@@ -8,6 +8,7 @@ import {Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy}
 })
 export class CourseBlockComponent implements OnInit {
   @Input('course') course;
+  @Input() loggedWithPermition;
   @Output() courseDeleted = new EventEmitter();
   @Output() courseEdited = new EventEmitter();
   @Output() courseRated = new EventEmitter();
