@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ComponentsModule } from './components/components.module';
 import { CoursesPageModule, CoursesPageComponent } from './pages/courses-page/courses-page.module';
 import { LoginPageModule, LoginPageComponent } from './pages/login-page/login-page.module';
+import { CreateCoursePageModule, CreateCoursePageComponent } from './pages/create-course-page/create-course-page.module';
 
 import { AuthenticationModule } from './services/authentication/authentication.module';
 
@@ -15,6 +16,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 const appRoutes: Routes = [
   { path: 'courses', component: CoursesPageComponent },
   { path: 'login', component: LoginPageComponent },
+  { path: 'create-course', component: CreateCoursePageComponent },
   { path: '',
     redirectTo: 'courses',
     pathMatch: 'full'
@@ -25,7 +27,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +35,7 @@ const appRoutes: Routes = [
     ComponentsModule,
     CoursesPageModule,
     LoginPageModule,
+    CreateCoursePageModule,
     AuthenticationModule.forRoot(),
     RouterModule.forRoot(appRoutes)
   ],

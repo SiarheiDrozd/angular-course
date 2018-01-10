@@ -70,7 +70,18 @@ a:hover {
 }
 
 .label {
-  height: @height-input;
+  min-height: @height-input;
+
+  .label-text {
+
+    &__half-width {
+      width: 50%;
+    }
+  }
+  .input__centered {
+    width: 50%;
+    text-align: center;
+  }
 }
 
 .input[type="text"] {
