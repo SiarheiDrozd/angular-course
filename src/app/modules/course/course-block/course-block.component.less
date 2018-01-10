@@ -1,3 +1,5 @@
+@import "../../../../assets/variables.less";
+
 .course-block {
   width: 100%;
   margin-bottom: 5px;
@@ -5,10 +7,17 @@
   background: #ffffff;
   transition: all 0.25s ease;
   box-shadow: 0 0 5px 0 #9e9e9e;
+
+  .fa-star {
+    color: @gold;
+    cursor: pointer;
+
+    &:hover {
+      font-weight: 900;
+    }
+  }
 }
-.course-block:hover {
-  box-shadow: 0 0 10px 0 #8a8a8a;
-}
+
 .course-block_header {
   vertical-align: middle;
 

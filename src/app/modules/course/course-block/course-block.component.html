@@ -2,11 +2,13 @@
          class="course-block clearfix">
   <div class="course-block_description inline-block float-left">
     <header class="course-block_header">
-      <h2 class="heading capitalize">
-        {{course.title}}
-        <span>{{course.id}}</span>
+      <h2 class="heading">
+        {{course.title | uppercase}}
       </h2>
-      <span>{{course.duration}}min</span>
+      <span>{{course.duration | duration}}</span>
+      <i class="fa-star"
+         [ngClass]="{'fas': course.topRated, 'far': !course.topRated}"
+         (click)="rateCourse($event)"></i>
       <span class="float-right">{{course.date | date}}</span>
     </header>
     <p>

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CoursesPageService} from './courses-page.service';
-import {Course} from "../../modules/course/course-block/course-block.class";
+import {Course} from '../../modules/course/course-block/course-block.class';
 
 @Component({
   selector: 'app-courses-page',
@@ -38,8 +38,29 @@ export class CoursesPageComponent implements OnInit {
 
   handleModalResult(result: boolean) {
     this.showModal = false;
-    if(result) {
+    if (result) {
       this.courses = this.coursesPageService.deleteCourse(this.currentCourseId);
     }
+  }
+
+  isFreshCourse(course): boolean {
+    const TODAY = new Date(),
+      courseDate = course.date;
+    return (courseDate < TODAY) && (courseDate >= new Date().setDate(TODAY.getDate() - 14));
+  }
+
+  isUpcommingCourse(course): boolean {
+    const TODAY = new Date(),
+      courseDate = course.date;
+    return courseDate > TODAY;
+  }
+
+  rateCourse(course) {
+    course.topRated = !course.topRated;
+    this.coursesPageService.updateCourse(course);
+  }
+
+  filterList(filterValue) {
+    this.courses = this.coursesPageService.filterCourses(filterValue);
   }
 }
