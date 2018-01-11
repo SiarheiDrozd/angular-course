@@ -1,6 +1,6 @@
 <section id="{{course.id}}"
-         class="course-block clearfix">
-  <div class="course-block_description inline-block float-left"
+         class="course-block clearfix inline-list">
+  <div class="course-block_description inline-block"
        [ngClass]="{'full-width': !loggedWithPermition}">
     <header class="course-block_header">
       <h2 class="heading">
@@ -17,7 +17,7 @@
     </p>
   </div>
   <div *ngIf="loggedWithPermition"
-       class="course-block_controls inline-block float-right">
+       class="course-block_controls inline-block align-middle_vertical">
     <button class="button course-block_button capitalize"
             (click)="emitEdit($event)">
       edit

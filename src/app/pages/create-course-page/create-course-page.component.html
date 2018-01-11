@@ -4,8 +4,7 @@
   </header>
 
   <main class="main">
-    <div
-          class="wrapper__create-course">
+    <div class="wrapper__create-course">
 
       <label class="magic-underline label block inline-list">
         <span class="label-text__half-width center-text">
@@ -19,8 +18,8 @@
         <span class="label-text__half-width center-text">
           Description
         </span>
-        <textarea type="text">
-        </textarea>
+        <textarea type="text"
+                  class="input textarea_description"></textarea>
       </label>
 
       <label class="magic-underline label block inline-list">
@@ -36,14 +35,14 @@
           Duration
         </span>
         <input type="number"
-               class="input"
+               class="input input_duration"
                name="duration"
-        [(ngModel)]="durationVal">
-        <span>{{durationVal}}</span>
+               [(ngModel)]="durationVal">
+        <span class="text_duration">{{durationVal | duration}}</span>
       </label>
 
       <label class="magic-underline label block inline-list">
-        <span class="label-text__half-width center-text">
+        <span class="label-text__half-width center-text align-middle_vertical">
           Authors
         </span>
         <span class="label-text__half-width inline-list">
@@ -54,7 +53,7 @@
             <option>3</option>
             <option>4</option>
           </select>
-          <span>
+          <span class="block">
             <button class="block">
               >
             </button>
@@ -72,9 +71,9 @@
         </span>
       </label>
 
-      <div class="">
-        <button>Save</button>
-        <button>Cancel</button>
+      <div class="align-middle_horizontal inline-block">
+        <button class="button">Save</button>
+        <button class="button">Cancel</button>
       </div>
     </div>
   </main>

@@ -6,9 +6,28 @@
 
   .label {
     margin-bottom: @padding-m;
+
+    .input {
+      width: 50%;
+      &_duration {
+        width: 25%;
+      }
+    }
+
+    .text_duration {
+      padding-left: 10px;
+      width: 25%;
+    }
+
+    .textarea_description {
+      min-height: 50px;
+      width: 50%;
+    }
   }
+
 }
 
 .create-course_select {
+  &:extend(.input);
   width: 40%;
 }
