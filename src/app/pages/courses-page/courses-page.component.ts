@@ -11,7 +11,7 @@ import * as Rx from "rxjs/Rx";
 })
 
 export class CoursesPageComponent implements OnInit {
-  protected courses: Rx.Observable<Course>;
+
   private showDeleteModal: boolean;
   private showEditModal: boolean;
   private modalHeading: string;
@@ -27,11 +27,6 @@ export class CoursesPageComponent implements OnInit {
     this.showDeleteModal = false;
     this.showEditModal = false;
     this.modalHeading = '';
-    this.getCourses();
-  }
-
-  getCourses() {
-    this.courses = this.coursesPageService.getCourses();
   }
 
   showDeleteModalWindow(course) {
@@ -48,9 +43,7 @@ export class CoursesPageComponent implements OnInit {
 
   handleDeleteCourse(result) {
     if (result) {
-      // this.courses.subscribe(() => {
-        this.coursesPageService.deleteCourse(this.courseToDelete);
-      // });
+      this.coursesPageService.deleteCourse(this.courseToDelete);
     }
     this.showDeleteModal = false;
   }
@@ -58,7 +51,6 @@ export class CoursesPageComponent implements OnInit {
   handleEditCourse(result) {
     if (result) {
       this.coursesPageService.updateCourse(this.courseToEdit);
-      this.getCourses();
     }
     this.showEditModal = false;
   }
@@ -81,7 +73,7 @@ export class CoursesPageComponent implements OnInit {
   }
 
   filterList(filterValue) {
-    this.courses = this.coursesPageService.filterCourses.call(this, filterValue, 'date');
+    this.coursesPageService.filterCourses(filterValue, 'title');
   }
 
   isLoggedWithPermition(): boolean {

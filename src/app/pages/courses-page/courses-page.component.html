@@ -7,11 +7,11 @@
     <app-toolbox class="courses_toolbox clearfix vertical-align_parent"
                  (filter)="filterList($event)"></app-toolbox>
     <ul class="courses">
-      <li *ngIf="!courses"
+      <li *ngIf="!coursesPageService.courses"
           class="no-courses-block">
         No data. Feel free to add new course.
       </li>
-      <li *ngFor="let course of courses | orderBy:'date' | async">
+      <li *ngFor="let course of coursesPageService.courses | async | orderBy:'date'">
         <app-course-block [course]="course"
                           [loggedWithPermition]="isLoggedWithPermition()"
                           class="block course-block"

@@ -1,41 +1,53 @@
 import {Injectable} from '@angular/core';
+
 import {Course} from '../../modules/course/course-block/course-block.class';
-import { COURSES } from './courses-page.data';
+import {COURSES} from './courses-page.data';
+
 import * as Rx from 'rxjs/Rx';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class CoursesPageService {
 
-  public courses: Rx.Observable<Course>;
+  private _courses: Rx.BehaviorSubject<Course[]> = new BehaviorSubject([]);
 
   constructor() {
-    this.courses = this.loadCourses();
+    this.loadCourses();
   }
 
-  private loadCourses(): Rx.Observable<Course>{
-    if (COURSES && Array.isArray(COURSES)) {
-      return Rx.Observable.from(COURSES)
-        .map(courseData => this.createCourse(courseData));
-    } else {
-      return null;
-    }
+  get courses() {
+    return this.asObservable(this._courses);
   }
 
-  getCourses(): Rx.Observable<Course> {
-    this.courses = this.courses || this.loadCourses();
-    console.log(this.courses);
-    return this.courses;
+  private asObservable(subject) {
+    return new Observable(fn => subject.subscribe(fn));
+  }
+
+  private loadCourses() {
+    return Rx.Observable.of(COURSES).subscribe(res => {
+        const courses = res.map(
+          courseData => {
+            return this.createCourse(courseData);
+          }
+        );
+        this._courses.next(courses);
+      },
+      () => console.error('Error retrieving courses')
+    );
   }
 
   filterCourses(filter: string, searchField: string): any {
-    return this.courses.filter(
-      // (courses)=>{
-      // courses.filter(
-    (course)=>{
-        const SEARCH = course[searchField].toString().match(new RegExp(filter, 'gi'));
-        return SEARCH && SEARCH.length > 0;
-      // })
-    });
+    return Rx.Observable.of(COURSES)
+      .subscribe((coursesData: Course[]) => {
+        this._courses.next(coursesData);
+        let courses = this._courses.getValue();
+        courses = courses.filter((course) => {
+          const SEARCH = course[searchField].match(new RegExp(filter, 'gi'));
+          return SEARCH && SEARCH.length > 0;
+        });
+        this._courses.next(courses);
+      });
   }
 
   createCourse(courseData): Course {
@@ -46,47 +58,40 @@ export class CoursesPageService {
       new Date(courseData.date),
       courseData.description,
       courseData.topRated,
-      );
+    );
   }
 
-  addCourse(course: Course): Rx.Observable<Course> {
-    return Rx.Observable.merge(this.courses.flatMap, Rx.Observable.of(course));
-  }
-
-  getCourseById(id) {
-    let courseToReturn = {};
-    console.log('1');
-
-    this.courses.filter(item => {
-      console.log('2');
-
-      return item.id === id;
+  addCourse(course: Course) {
+    return Rx.Observable.of([...COURSES].push(course)).subscribe(() => {
+      const courses = this._courses.getValue();
+      courses.push(course);
+      this._courses.next(courses);
     });
-    return courseToReturn[0];
   }
 
   updateCourse(courseToUpdate) {
-    // return this.courses.map((course)=>{
-    //   if(course.id === courseToUpdate.id) {
-    //     return
-    //   }
-    // });
-
-    // let newCourses = [...this.courses];
-    // newCourses.splice(this.getCourseIndex(courseToUpdate), 1, courseToUpdate);
-    // this.courses = newCourses;
+    return Rx.Observable.of(COURSES.map((course: Course) => {
+      return courseToUpdate.id === course.id ? courseToUpdate : course;
+    }))
+      .subscribe(() => {
+          const courses = this._courses.getValue();
+          const index = courses.findIndex((course) => course.id === courseToUpdate.id);
+          courses.splice(index, 1, courseToUpdate);
+          this._courses.next(courses);
+        }
+      );
   }
 
-  deleteCourse(course): Rx.Observable<Course> {
-    if (course)
-    console.log(course, this.courses);
-
-    this.courses.filter( item => {
-      console.log('item', item);
-      return false
-    });
-    console.log( this.courses);
-
-    return this.courses;
+  deleteCourse(courseToDelete) {
+    return Rx.Observable.of(COURSES.filter((course: Course) => {
+      return courseToDelete.id !== course.id;
+    }))
+      .subscribe(() => {
+          const courses = this._courses.getValue();
+          const index = courses.findIndex((course) => course.id === courseToDelete.id);
+          courses.splice(index, 1);
+          this._courses.next(courses);
+        }
+      );
   }
 }
