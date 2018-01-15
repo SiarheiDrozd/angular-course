@@ -1,38 +1,40 @@
 import {Injectable} from '@angular/core';
 import {Course} from '../../modules/course/course-block/course-block.class';
 import { COURSES } from './courses-page.data';
-// const COURSES = null;
+import * as Rx from 'rxjs/Rx';
 
 @Injectable()
 export class CoursesPageService {
 
-  public courses: Course[];
+  public courses: Rx.Observable<Course>;
 
   constructor() {
     this.courses = this.loadCourses();
   }
 
-  private loadCourses(): Course[] {
+  private loadCourses(): Rx.Observable<Course>{
     if (COURSES && Array.isArray(COURSES)) {
-      return COURSES.map(courseData => this.createCourse(courseData));
+      return Rx.Observable.from(COURSES)
+        .map(courseData => this.createCourse(courseData));
     } else {
       return null;
     }
   }
 
-  private getCourseIndex(course: Course): number {
-    return this.courses.indexOf(this.getCourseById(course.id));
-  }
-
-  getCourses(): Course[] {
+  getCourses(): Rx.Observable<Course> {
     this.courses = this.courses || this.loadCourses();
+    console.log(this.courses);
     return this.courses;
   }
 
-  filterCourses(filter: string, searchField: string): Course[] {
-    return this.courses.filter(course => {
-      const SEARCH = course[searchField].match(new RegExp(filter, 'gi'));
-      return SEARCH && SEARCH.length > 0;
+  filterCourses(filter: string, searchField: string): any {
+    return this.courses.filter(
+      // (courses)=>{
+      // courses.filter(
+    (course)=>{
+        const SEARCH = course[searchField].toString().match(new RegExp(filter, 'gi'));
+        return SEARCH && SEARCH.length > 0;
+      // })
     });
   }
 
@@ -47,27 +49,43 @@ export class CoursesPageService {
       );
   }
 
-  addCourse(course: Course): Course[] {
-    let newCourses = [...this.courses];
-    newCourses.push(course);
-    this.courses = newCourses;
-    return this.courses;
+  addCourse(course: Course): Rx.Observable<Course> {
+    return Rx.Observable.merge(this.courses.flatMap, Rx.Observable.of(course));
   }
 
   getCourseById(id) {
-    return this.courses.find(item => item.id === id);
+    let courseToReturn = {};
+    console.log('1');
+
+    this.courses.filter(item => {
+      console.log('2');
+
+      return item.id === id;
+    });
+    return courseToReturn[0];
   }
 
   updateCourse(courseToUpdate) {
-    let newCourses = [...this.courses];
-    newCourses.splice(this.getCourseIndex(courseToUpdate), 1, courseToUpdate);
-    this.courses = newCourses;
+    // return this.courses.map((course)=>{
+    //   if(course.id === courseToUpdate.id) {
+    //     return
+    //   }
+    // });
+
+    // let newCourses = [...this.courses];
+    // newCourses.splice(this.getCourseIndex(courseToUpdate), 1, courseToUpdate);
+    // this.courses = newCourses;
   }
 
-  deleteCourse(id): Course[] {
-    this.courses = this.courses.filter(element => {
-      return element.id !== id;
+  deleteCourse(course): Rx.Observable<Course> {
+    if (course)
+    console.log(course, this.courses);
+
+    this.courses.filter( item => {
+      console.log('item', item);
+      return false
     });
+    console.log( this.courses);
 
     return this.courses;
   }

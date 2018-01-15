@@ -20,11 +20,11 @@ export class CourseBlockComponent implements OnInit {
   }
 
   emitEdit() {
-    this.courseEdited.emit(this.course.id);
+    this.courseEdited.emit(this.course);
   }
 
   emitDelete() {
-    this.courseDeleted.emit(this.course.id);
+    this.courseDeleted.emit(this.course);
   }
 
   rateCourse() {

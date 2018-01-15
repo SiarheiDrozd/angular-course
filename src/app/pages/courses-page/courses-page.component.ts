@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CoursesPageService} from './courses-page.service';
 import {Course} from '../../modules/course/course-block/course-block.class';
 import {AuthenticationService} from '../../services';
+import * as Rx from "rxjs/Rx";
 
 @Component({
   selector: 'app-courses-page',
@@ -10,7 +11,7 @@ import {AuthenticationService} from '../../services';
 })
 
 export class CoursesPageComponent implements OnInit {
-  protected courses: Course[];
+  protected courses: Rx.Observable<Course>;
   private showDeleteModal: boolean;
   private showEditModal: boolean;
   private modalHeading: string;
@@ -33,21 +34,23 @@ export class CoursesPageComponent implements OnInit {
     this.courses = this.coursesPageService.getCourses();
   }
 
-  showDeleteModalWindow(id) {
-    this.currentCourseId = id;
+  showDeleteModalWindow(course) {
+    this.courseToDelete = course;
+    this.currentCourseId = course.id;
     this.modalHeading = 'Do you really want to delete this course?';
-    this.courseToDelete = this.coursesPageService.getCourseById(id);
     this.showDeleteModal = true;
   }
 
-  showEditModalWindow(id) {
-    this.courseToEdit = {...this.coursesPageService.getCourseById(id)};
+  showEditModalWindow(course) {
+    this.courseToEdit = course;
     this.showEditModal = true;
   }
 
   handleDeleteCourse(result) {
     if (result) {
-      this.courses = [...this.coursesPageService.deleteCourse(this.currentCourseId)];
+      // this.courses.subscribe(() => {
+        this.coursesPageService.deleteCourse(this.courseToDelete);
+      // });
     }
     this.showDeleteModal = false;
   }
@@ -78,7 +81,7 @@ export class CoursesPageComponent implements OnInit {
   }
 
   filterList(filterValue) {
-    this.courses = this.coursesPageService.filterCourses(filterValue, 'date');
+    this.courses = this.coursesPageService.filterCourses.call(this, filterValue, 'date');
   }
 
   isLoggedWithPermition(): boolean {

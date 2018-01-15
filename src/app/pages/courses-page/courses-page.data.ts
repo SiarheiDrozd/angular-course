@@ -52,4 +52,12 @@ export const COURSES: object[] = [
     description: DUMMY_TEXT,
     controls: DEFAULT_CONTROLLS,
   },
+  {
+    id: '5',
+    title: 'video course sS',
+    duration: 15,
+    date: '1 Jan 2018',
+    description: DUMMY_TEXT,
+    controls: DEFAULT_CONTROLLS,
+  },
 ];
