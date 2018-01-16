@@ -4,13 +4,11 @@ import {Course} from '../../modules/course/course-block/course-block.class';
 import {COURSES} from './courses-page.data';
 
 import * as Rx from 'rxjs/Rx';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class CoursesPageService {
 
-  private _courses: Rx.BehaviorSubject<Course[]> = new BehaviorSubject([]);
+  private _courses: Rx.BehaviorSubject<Course[]> = new Rx.BehaviorSubject([]);
 
   constructor() {
     this.loadCourses();
@@ -21,7 +19,7 @@ export class CoursesPageService {
   }
 
   private asObservable(subject) {
-    return new Observable(fn => subject.subscribe(fn));
+    return new Rx.Observable(fn => subject.subscribe(fn));
   }
 
   private loadCourses() {

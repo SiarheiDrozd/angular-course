@@ -12,24 +12,17 @@ export class LoginFormComponent implements OnInit {
   private user: User;
   @Output() onLogin = new EventEmitter();
 
-  constructor(private _authService: AuthenticationService) {
-    this.user = {
-      name: 'User',
-      password: 'pass',
-      permitions: {
-        edit: false
-      }
-    }
+  constructor(private authService: AuthenticationService) {
   }
 
   ngOnInit() {
-    this.user = this._authService.getUserInfo() || this.user;
+    this.user = this.authService.getUserInfo() || this.user;
   }
 
   login(): void {
-    this._authService.login(this.user);
+    this.authService.login(this.user);
 
-    if (this._authService.isAuthenticated()) {
+    if (this.authService.isAuthenticated()) {
       this.onLogin.emit();
     }
   }

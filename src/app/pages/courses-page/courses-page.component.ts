@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {CoursesPageService} from './courses-page.service';
 import {Course} from '../../modules/course/course-block/course-block.class';
 import {AuthenticationService} from '../../services';
-import * as Rx from "rxjs/Rx";
 
 @Component({
   selector: 'app-courses-page',
@@ -78,8 +77,7 @@ export class CoursesPageComponent implements OnInit {
 
   isLoggedWithPermition(): boolean {
     const HAS_PERMITION = this._authService.getUserInfo() &&
-      this._authService.getUserInfo().permitions &&
-      this._authService.getUserInfo().permitions.edit;
+      this._authService.getUserInfo().editPermition;
     return this._authService.isAuthenticated() && HAS_PERMITION;
   }
 }
