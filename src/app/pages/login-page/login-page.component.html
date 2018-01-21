@@ -1,7 +1,7 @@
 <div class="wrapper">
   <header class="header">
-    <app-header [hideBreadcrumbs]="true"
-                [hideLogIn]="true">
+    <app-header [hideBreadcrumbs]="false"
+                [hideLogIn]="false">
     </app-header>
   </header>
 
@@ -9,7 +9,7 @@
     <p>
       <a href="/courses">back to courses</a>
     </p>
-    <app-login-form (onLogin)="handleLogin($event)">
+    <app-login-form (whenLogin)="handleLogin($event)">
     </app-login-form>
   </main>
 

@@ -23,12 +23,9 @@ export class CoursesPageService {
   }
 
   private loadCourses() {
-    return Rx.Observable.of(COURSES).subscribe(res => {
-        const courses = res.map(
-          courseData => {
-            return this.createCourse(courseData);
-          }
-        );
+    return Rx.Observable.of(COURSES)
+      .subscribe(res => {
+        const courses = res.map(courseData => this.createCourse(courseData));
         this._courses.next(courses);
       },
       () => console.error('Error retrieving courses')

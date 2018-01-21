@@ -1,55 +1,58 @@
-import { Injectable } from '@angular/core';
-import { User } from './user';
-import { USERS } from './usersStorage';
+import {Injectable} from '@angular/core';
+import {User} from './user';
+import {USERS} from './usersStorage';
 
-import * as Rx from 'rxjs/Rx';
+import {ReplaySubject} from 'rxjs/ReplaySubject';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 class AuthenticationService {
 
-  private _user: Rx.ReplaySubject<User> = new Rx.ReplaySubject(2);
+  private _isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private _user: ReplaySubject<User> = new ReplaySubject<User>();
 
-  constructor() { }
-
-  get user() {
-    return this.asObservable(this._user);
+  constructor() {
   }
 
-  private asObservable(subject) {
-    return new Rx.Observable(fn => subject.subscribe(fn));
+  get user() {
+    return this._user.asObservable();
+  }
+
+  get authenticated() {
+    return this._isAuthenticated.asObservable();
   }
 
   private checkUser(userToCheck) {
-    return USERS.filter((user: User) => {
-      console.log(user, this._user);
+    return USERS.find((user: User) => {
       return (user.name === userToCheck.name) && (user.password === userToCheck.password);
-    })[0];
+    });
   }
 
-  login(user: User): void {
-    console.log(this.user);
-    const userToSet = this.checkUser(this.user);
+  logIn(userToSet): boolean {
+    userToSet = this.checkUser(userToSet);
+
     if (userToSet) {
-      window.localStorage.setItem('user', JSON.stringify(userToSet));
+      this._user.next(userToSet);
+      this._isAuthenticated.next(true);
+      this.setUserInfo(userToSet);
+      return true;
     }
+
+    return false;
   }
 
-  logout(): void {
+  logOut() {
+    this._user.next(null);
+    this._isAuthenticated.next(false);
     window.localStorage.removeItem('user');
-  }
-
-  isAuthenticated(): boolean {
-    Rx.Observable.of(window.localStorage.getItem('user'))
-      .subscribe(user => {
-        console.log(user);
-        this._user.next(JSON.parse(user));
-      });
-
-    return !!window.localStorage.getItem('user');
   }
 
   getUserInfo(): User {
     return JSON.parse(window.localStorage.getItem('user'));
+  }
+
+  setUserInfo(userToSet): void {
+    window.localStorage.setItem('user', JSON.stringify(userToSet));
   }
 }
 

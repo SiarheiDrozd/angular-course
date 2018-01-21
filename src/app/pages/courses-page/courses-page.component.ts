@@ -19,7 +19,7 @@ export class CoursesPageComponent implements OnInit {
   private courseToEdit: Course;
 
   constructor(private coursesPageService: CoursesPageService,
-              private _authService: AuthenticationService) {
+              public authService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -76,8 +76,6 @@ export class CoursesPageComponent implements OnInit {
   }
 
   isLoggedWithPermition(): boolean {
-    const HAS_PERMITION = this._authService.getUserInfo() &&
-      this._authService.getUserInfo().editPermition;
-    return this._authService.isAuthenticated() && HAS_PERMITION;
+    return true; //this.authService.user && this.authService.user.editPermition;
   }
 }

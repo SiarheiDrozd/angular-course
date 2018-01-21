@@ -1,34 +1,37 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, ChangeDetectionStrategy} from '@angular/core';
 import {AuthenticationService, User} from '../../services/';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less'],
-  providers: [AuthenticationService]
+  providers: [AuthenticationService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
 
-  private isLogged: boolean;
-  private user: User;
+  public isLogged: boolean;
+  public user: User;
 
   @Input() hideBreadcrumbs: boolean;
   @Input() hideLogIn: boolean;
 
-  constructor(private _authService: AuthenticationService) {
+  constructor(private authService: AuthenticationService) {
   }
 
   ngOnInit() {
-    this.isLogged = this._authService.isAuthenticated();
-    if (this.isLogged) {
-      this.user = this._authService.getUserInfo();
+    this.authService.authenticated
+      .subscribe((state: boolean) => this.isLogged = state);
+    this.authService.user
+      .subscribe(user => this.user = user);
+
+    const STORED_USER = this.authService.getUserInfo();
+    if (STORED_USER && !this.isLogged) {
+      this.authService.logIn(STORED_USER);
     }
   }
 
-  logOff() {
-    this._authService.logout();
-    this.isLogged = this._authService.isAuthenticated();
-    this.user = null;
+  logOut() {
+    this.authService.logOut();
   }
-
 }

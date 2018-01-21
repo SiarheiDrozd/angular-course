@@ -1,5 +1,5 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {AuthenticationService, User} from '../../services';
+import {AuthenticationService} from '../../services';
 
 @Component({
   selector: 'app-login-form',
@@ -9,21 +9,27 @@ import {AuthenticationService, User} from '../../services';
 })
 export class LoginFormComponent implements OnInit {
 
-  private user: User;
-  @Output() onLogin = new EventEmitter();
+  public user;
+  @Output() whenLogin = new EventEmitter();
 
   constructor(private authService: AuthenticationService) {
   }
 
   ngOnInit() {
-    this.user = this.authService.getUserInfo() || this.user;
+    this.user = {};
   }
 
   login(): void {
-    this.authService.login(this.user);
-
-    if (this.authService.isAuthenticated()) {
-      this.onLogin.emit();
+    if (this.authService.logIn(this.user)) {
+      this.whenLogin.emit({
+        success: true,
+        user: this.user
+      });
+    } else {
+      this.whenLogin.emit({
+        success: false,
+        user: null
+      });
     }
   }
 }
