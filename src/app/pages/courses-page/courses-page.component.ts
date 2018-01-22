@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {CoursesPageService} from './courses-page.service';
 import {Course} from '../../modules/course/course-block/course-block.class';
 import {AuthenticationService, User} from '../../services';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-courses-page',
@@ -9,27 +10,28 @@ import {AuthenticationService, User} from '../../services';
   styleUrls: ['./courses-page.component.less']
 })
 
-export class CoursesPageComponent implements OnInit {
+export class CoursesPageComponent implements OnInit, OnDestroy {
 
   private showDeleteModal: boolean;
   private showEditModal: boolean;
   private modalHeading: string;
   private currentCourseId: string;
   private user;
+  private authUserSub: Subscription;
   private courseToDelete: Course;
   private courseToEdit: Course;
 
   constructor(private coursesPageService: CoursesPageService,
               public authService: AuthenticationService) {
-    this.user = {};
+    this.user = null;
   }
 
   ngOnInit() {
     this.showDeleteModal = false;
     this.showEditModal = false;
     this.modalHeading = '';
-    this.authService.user
-      .subscribe(user => this.user = user);
+    this.authUserSub = this.authService.user
+      .subscribe(user => {console.log('asd', user); this.user = user;});
   }
 
   showDeleteModalWindow(course) {
@@ -77,5 +79,9 @@ export class CoursesPageComponent implements OnInit {
 
   filterList(filterValue) {
     this.coursesPageService.filterCourses(filterValue, 'title');
+  }
+
+  ngOnDestroy() {
+    this.authUserSub.unsubscribe();
   }
 }

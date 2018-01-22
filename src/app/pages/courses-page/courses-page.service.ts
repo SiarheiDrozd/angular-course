@@ -15,11 +15,7 @@ export class CoursesPageService {
   }
 
   get courses() {
-    return this.asObservable(this._courses);
-  }
-
-  private asObservable(subject) {
-    return new Rx.Observable(fn => subject.subscribe(fn));
+    return this._courses.asObservable();
   }
 
   private loadCourses() {

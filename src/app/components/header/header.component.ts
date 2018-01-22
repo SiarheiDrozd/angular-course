@@ -1,15 +1,18 @@
-import {Component, OnInit, Input, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy} from '@angular/core';
 import {AuthenticationService, User} from '../../services/';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less'],
   providers: [AuthenticationService],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
+  private authStateSub: Subscription;
+  private authUserSub: Subscription;
   public isLogged: boolean;
   public user: User;
 
@@ -20,9 +23,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.authenticated
+    this.authStateSub = this.authService.authenticated
       .subscribe((state: boolean) => this.isLogged = state);
-    this.authService.user
+    this.authUserSub = this.authService.user
       .subscribe(user => this.user = user);
 
     const STORED_USER = this.authService.getUserInfo();
@@ -33,5 +36,10 @@ export class HeaderComponent implements OnInit {
 
   logOut() {
     this.authService.logOut();
+  }
+
+  ngOnDestroy() {
+    this.authStateSub.unsubscribe();
+    this.authUserSub.unsubscribe();
   }
 }
