@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CoursesPageService} from './courses-page.service';
 import {Course} from '../../modules/course/course-block/course-block.class';
-import {AuthenticationService} from '../../services';
+import {AuthenticationService, User} from '../../services';
 
 @Component({
   selector: 'app-courses-page',
@@ -15,17 +15,21 @@ export class CoursesPageComponent implements OnInit {
   private showEditModal: boolean;
   private modalHeading: string;
   private currentCourseId: string;
+  private user;
   private courseToDelete: Course;
   private courseToEdit: Course;
 
   constructor(private coursesPageService: CoursesPageService,
               public authService: AuthenticationService) {
+    this.user = {};
   }
 
   ngOnInit() {
     this.showDeleteModal = false;
     this.showEditModal = false;
     this.modalHeading = '';
+    this.authService.user
+      .subscribe(user => this.user = user);
   }
 
   showDeleteModalWindow(course) {
@@ -73,9 +77,5 @@ export class CoursesPageComponent implements OnInit {
 
   filterList(filterValue) {
     this.coursesPageService.filterCourses(filterValue, 'title');
-  }
-
-  isLoggedWithPermition(): boolean {
-    return true; //this.authService.user && this.authService.user.editPermition;
   }
 }

@@ -7,8 +7,8 @@ import {Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy}
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseBlockComponent implements OnInit {
-  @Input('course') course;
-  @Input() loggedWithPermition;
+  @Input() course;
+  @Input() edit;
   @Output() courseDeleted = new EventEmitter();
   @Output() courseEdited = new EventEmitter();
   @Output() courseRated = new EventEmitter();

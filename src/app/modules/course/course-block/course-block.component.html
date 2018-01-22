@@ -16,7 +16,7 @@
       {{course.description}}
     </p>
   </div>
-  <div *ngIf="loggedWithPermition"
+  <div *ngIf="edit"
        class="course-block_controls inline-block align-middle_vertical">
     <button class="button course-block_button capitalize"
             (click)="emitEdit($event)">

@@ -9,7 +9,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 class AuthenticationService {
 
   private _isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  private _user: ReplaySubject<User> = new ReplaySubject<User>();
+  private _user: ReplaySubject<User> = new ReplaySubject<User>(2);
 
   constructor() {
   }
