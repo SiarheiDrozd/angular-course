@@ -31,9 +31,9 @@ export class CoursesPageService {
   filterCourses(filter: string, searchField: string): any {
     return Rx.Observable.of(COURSES)
       .subscribe((coursesData: Course[]) => {
-        this._courses.next(coursesData);
+        // this._courses.next(coursesData);
         let courses = this._courses.getValue();
-        courses = courses.filter((course) => {
+        courses = coursesData.filter((course) => {
           const SEARCH = course[searchField].match(new RegExp(filter, 'gi'));
           return SEARCH && SEARCH.length > 0;
         });

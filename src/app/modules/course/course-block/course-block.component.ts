@@ -4,7 +4,7 @@ import {Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy}
   selector: 'app-course-block',
   templateUrl: './course-block.component.html',
   styleUrls: ['./course-block.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseBlockComponent implements OnInit {
   @Input() course;

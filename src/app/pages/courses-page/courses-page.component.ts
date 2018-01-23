@@ -1,7 +1,7 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, AfterContentChecked} from '@angular/core';
 import {CoursesPageService} from './courses-page.service';
 import {Course} from '../../modules/course/course-block/course-block.class';
-import {AuthenticationService, User} from '../../services';
+import {AuthenticationService} from '../../services';
 import {Subscription} from 'rxjs/Subscription';
 
 @Component({
@@ -10,28 +10,37 @@ import {Subscription} from 'rxjs/Subscription';
   styleUrls: ['./courses-page.component.less']
 })
 
-export class CoursesPageComponent implements OnInit, OnDestroy {
+export class CoursesPageComponent implements OnInit, OnDestroy, AfterContentChecked {
 
   private showDeleteModal: boolean;
   private showEditModal: boolean;
   private modalHeading: string;
   private currentCourseId: string;
   private user;
+  private courses;
   private authUserSub: Subscription;
+  private coursesSub: Subscription;
   private courseToDelete: Course;
   private courseToEdit: Course;
 
   constructor(private coursesPageService: CoursesPageService,
               public authService: AuthenticationService) {
     this.user = null;
+    this.authUserSub = this.authService.user
+      .subscribe(user => this.user = user);
+    this.coursesSub = this.coursesPageService.courses
+      .subscribe(courses => this.courses = courses);
   }
 
   ngOnInit() {
     this.showDeleteModal = false;
     this.showEditModal = false;
     this.modalHeading = '';
-    this.authUserSub = this.authService.user
-      .subscribe(user => {console.log('asd', user); this.user = user;});
+    console.log(this.user);
+  }
+
+  ngAfterContentChecked() {
+
   }
 
   showDeleteModalWindow(course) {
@@ -83,5 +92,6 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.authUserSub.unsubscribe();
+    this.coursesSub.unsubscribe();
   }
 }

@@ -8,14 +8,16 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 @Injectable()
 class AuthenticationService {
 
-  private _isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  private _user: ReplaySubject<User> = new ReplaySubject<User>(2);
+  private _isAuthenticated: BehaviorSubject<boolean>;
+  public _user: ReplaySubject<User>;
 
   constructor() {
+    this._isAuthenticated = new BehaviorSubject(false);
+    this._user = new ReplaySubject<User>(2);
   }
 
   get user() {
-    return this._user.asObservable();
+    return this._user;
   }
 
   get authenticated() {
@@ -27,6 +29,10 @@ class AuthenticationService {
       return (user.name === userToCheck.name) && (user.password === userToCheck.password);
     });
   }
+
+  // checkUser() {
+  //   this._user.next(this._user);
+  // }
 
   logIn(userToSet): boolean {
     userToSet = this.checkUser(userToSet);
