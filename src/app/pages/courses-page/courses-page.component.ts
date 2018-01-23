@@ -10,18 +10,20 @@ import {Course} from '../../modules/course/course-block/course-block.class';
 
 export class CoursesPageComponent implements OnInit {
   protected courses: Course[];
-  private showModal: boolean;
+  private showDeleteModal: boolean;
+  private showEditModal: boolean;
   private modalHeading: string;
-  private modalMessage: string;
   private currentCourseId: string;
+  private courseToDelete: Course;
+  private courseToEdit: Course;
 
   constructor(private coursesPageService: CoursesPageService) {
   }
 
   ngOnInit() {
-    this.showModal = false;
+    this.showDeleteModal = false;
+    this.showEditModal = false;
     this.modalHeading = '';
-    this.modalMessage = '';
     this.getCourses();
   }
 
@@ -29,18 +31,31 @@ export class CoursesPageComponent implements OnInit {
     this.courses = this.coursesPageService.getCourses();
   }
 
-  handleCourseDelete(id) {
+  showDeleteModalWindow(id) {
     this.currentCourseId = id;
     this.modalHeading = 'Do you really want to delete this course?';
-    this.modalMessage = this.coursesPageService.getCourseById(id).title + ' ' + id;
-    this.showModal = true;
+    this.courseToDelete = this.coursesPageService.getCourseById(id);
+    this.showDeleteModal = true;
   }
 
-  handleModalResult(result: boolean) {
-    this.showModal = false;
+  showEditModalWindow(id) {
+    this.courseToEdit = {...this.coursesPageService.getCourseById(id)};
+    this.showEditModal = true;
+  }
+
+  handleDeleteCourse(result) {
     if (result) {
-      this.courses = this.coursesPageService.deleteCourse(this.currentCourseId);
+      this.courses = [...this.coursesPageService.deleteCourse(this.currentCourseId)];
     }
+    this.showDeleteModal = false;
+  }
+
+  handleEditCourse(result) {
+    if (result) {
+      this.coursesPageService.updateCourse(this.courseToEdit);
+      this.getCourses();
+    }
+    this.showEditModal = false;
   }
 
   isFreshCourse(course): boolean {
@@ -61,6 +76,6 @@ export class CoursesPageComponent implements OnInit {
   }
 
   filterList(filterValue) {
-    this.courses = this.coursesPageService.filterCourses(filterValue);
+    this.courses = this.coursesPageService.filterCourses(filterValue, 'date');
   }
 }

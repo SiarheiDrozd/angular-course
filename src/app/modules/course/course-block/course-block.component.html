@@ -15,12 +15,15 @@
       {{course.description}}
     </p>
   </div>
-  <div *ngIf="course.controls"
+  <div *ngIf="true"
        class="course-block_controls inline-block float-right">
-    <button *ngFor="let control of course.controls"
-            class="button course-block_button capitalize"
-            (click)="controlEvent(control.event)">
-      {{control.label}}
+    <button class="button course-block_button capitalize"
+            (click)="emitEdit($event)">
+      edit
+    </button>
+    <button class="button course-block_button capitalize"
+            (click)="emitDelete($event)">
+      delete
     </button>
   </div>
 </section>

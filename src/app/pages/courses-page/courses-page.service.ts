@@ -29,9 +29,9 @@ export class CoursesPageService {
     return this.courses;
   }
 
-  filterCourses(filter): Course[] {
+  filterCourses(filter: string, searchField: string): Course[] {
     return this.courses.filter(course => {
-      const SEARCH = course.title.match(new RegExp(filter, 'gi'));
+      const SEARCH = course[searchField].match(new RegExp(filter, 'gi'));
       return SEARCH && SEARCH.length > 0;
     });
   }
@@ -43,13 +43,14 @@ export class CoursesPageService {
       courseData.duration,
       new Date(courseData.date),
       courseData.description,
-      courseData.controls,
       courseData.topRated,
       );
   }
 
   addCourse(course: Course): Course[] {
-    this.courses.push(course);
+    let newCourses = [...this.courses];
+    newCourses.push(course);
+    this.courses = newCourses;
     return this.courses;
   }
 
@@ -58,7 +59,9 @@ export class CoursesPageService {
   }
 
   updateCourse(courseToUpdate) {
-    this.courses = this.courses.splice(this.getCourseIndex(courseToUpdate), 1, courseToUpdate);
+    let newCourses = [...this.courses];
+    newCourses.splice(this.getCourseIndex(courseToUpdate), 1, courseToUpdate);
+    this.courses = newCourses;
   }
 
   deleteCourse(id): Course[] {

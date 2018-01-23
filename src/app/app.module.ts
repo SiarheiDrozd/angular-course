@@ -7,7 +7,7 @@ import { ComponentsModule } from './components/components.module';
 import { CoursesPageModule, CoursesPageComponent } from './pages/courses-page/courses-page.module';
 import { LoginPageModule, LoginPageComponent } from './pages/login-page/login-page.module';
 
-import { AuthenticationService } from './services/authentication/authentication.service';
+import { AuthenticationModule } from './services/authentication/authentication.module';
 
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
@@ -33,11 +33,10 @@ const appRoutes: Routes = [
     ComponentsModule,
     CoursesPageModule,
     LoginPageModule,
+    AuthenticationModule.forRoot(),
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [
-    AuthenticationService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

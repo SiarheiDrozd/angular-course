@@ -8,7 +8,6 @@ export class Course implements CourseBlockInterface {
     public duration: number,
     public date: Date,
     public description: string,
-    public controls?: object[],
     public topRated?: boolean
   ) {
     this.id = id;
@@ -16,7 +15,6 @@ export class Course implements CourseBlockInterface {
     this.duration = duration;
     this.date = date;
     this.description = description;
-    this.controls = controls;
     this.topRated = topRated || false;
   }
 }

@@ -3,7 +3,7 @@
     <app-header></app-header>
   </header>
 
-  <main class="main">
+  <main class="main courses-page">
     <app-toolbox class="courses_toolbox clearfix vertical-align_parent"
                  (filter)="filterList($event)"></app-toolbox>
     <ul class="courses">
@@ -18,15 +18,38 @@
                             'course-block_green': isFreshCourse(course),
                             'course-block_blue': isUpcommingCourse(course)
                           }"
-                          (courseDeleted)="handleCourseDelete($event)"
+                          (courseDeleted)="showDeleteModalWindow($event)"
+                          (courseEdited)="showEditModalWindow($event)"
                           (courseRated)="rateCourse($event)">
         </app-course-block>
       </li>
     </ul>
-    <app-modal *ngIf="showModal"
-               [heading]="modalHeading"
-               [message]="modalMessage"
-               (result)="handleModalResult($event)">
+    <app-modal *ngIf="showDeleteModal"
+               (result)="handleDeleteCourse($event)">
+      <h2>
+        {{modalHeading}}
+      </h2>
+      <p class="modal_message">
+        {{courseToDelete.title}}
+      </p>
+    </app-modal>
+    <app-modal *ngIf="showEditModal"
+               class="modal"
+               (result)="handleEditCourse($event)">
+      <p class="modal_message">
+        <label class="magic-underline block modal_label">
+          Title:
+          <input type="text"
+                 class="input modal_input"
+                 [(ngModel)]="courseToEdit.title">
+        </label>
+        <label>
+          Description:
+          <textarea class="modal_textarea"
+                    rows="10"
+                    [(ngModel)]="courseToEdit.description"></textarea>
+        </label>
+      </p>
     </app-modal>
   </main>
 

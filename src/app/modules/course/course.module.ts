@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CourseBlockComponent } from './course-block/course-block.component';
-import { DurationPipe } from '../../pipes/duration/duration.pipe';
+import { DurationPipe } from '../../pipes';
 
 @NgModule({
   imports: [

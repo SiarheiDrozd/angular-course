@@ -6,27 +6,25 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./modal.component.less']
 })
 export class ModalComponent implements OnInit {
-  @Input() confirmationModal: boolean;
-  @Input() heading: string;
-  @Input() message: string;
 
   @Output() result = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  emitConfirm(){
+  emitConfirm() {
     this.result.emit(true);
+    close();
   }
 
   emitDecline() {
     this.result.emit(false);
+    close();
   }
 
   close(event) {
-    if (event && event.target === event.currentTarget){
+    if (event && event.target === event.currentTarget) {
       this.result.emit(false);
     }
   }

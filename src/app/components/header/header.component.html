@@ -1,8 +1,21 @@
 <div class="header_content vertical-align_parent inline-list clearfix">
   <app-logo class="header_logo"></app-logo>
-  <app-breadcrumbs class="header_breadcrumbs"></app-breadcrumbs>
-  <div class="header_login-block">
-    <span>{{user.name}}</span>
-    <a href="/login" class="block">logoff</a>
+  <div class="header_breadcrumbs">
+    <app-breadcrumbs *ngIf="!hideBreadcrumbs"></app-breadcrumbs>
+  </div>
+  <div *ngIf="!hideLogIn"
+       class="header_login-block">
+    <span>{{user?.name}}</span>
+    <span *ngIf="isLogged"
+          tabindex="0"
+          class="block link"
+          (click)="logOff($event)">
+      log out
+    </span>
+    <a *ngIf="!isLogged"
+       href="/login"
+       class="block">
+      log in
+    </a>
   </div>
 </div>
