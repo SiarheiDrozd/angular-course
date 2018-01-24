@@ -3,12 +3,12 @@ import {Injectable} from '@angular/core';
 import {Course} from '../../modules/course/course-block/course-block.class';
 import {COURSES} from './courses-page.data';
 
-import * as Rx from 'rxjs/Rx';
+import {Observable, BehaviorSubject} from 'rxjs/';
 
 @Injectable()
 export class CoursesPageService {
 
-  private _courses: Rx.BehaviorSubject<Course[]> = new Rx.BehaviorSubject([]);
+  private _courses: BehaviorSubject<Course[]> = new BehaviorSubject([]);
 
   constructor() {
     this.loadCourses();
@@ -19,7 +19,7 @@ export class CoursesPageService {
   }
 
   private loadCourses() {
-    return Rx.Observable.of(COURSES)
+    return Observable.of(COURSES)
       .subscribe(res => {
         const courses = res.map(courseData => this.createCourse(courseData));
         this._courses.next(courses);
@@ -29,9 +29,8 @@ export class CoursesPageService {
   }
 
   filterCourses(filter: string, searchField: string): any {
-    return Rx.Observable.of(COURSES)
+    return Observable.of(COURSES)
       .subscribe((coursesData: Course[]) => {
-        // this._courses.next(coursesData);
         let courses = this._courses.getValue();
         courses = coursesData.filter((course) => {
           const SEARCH = course[searchField].match(new RegExp(filter, 'gi'));
@@ -53,7 +52,7 @@ export class CoursesPageService {
   }
 
   addCourse(course: Course) {
-    return Rx.Observable.of([...COURSES].push(course)).subscribe(() => {
+    return Observable.of([...COURSES].push(course)).subscribe(() => {
       const courses = this._courses.getValue();
       courses.push(course);
       this._courses.next(courses);
@@ -61,7 +60,7 @@ export class CoursesPageService {
   }
 
   updateCourse(courseToUpdate) {
-    return Rx.Observable.of(COURSES.map((course: Course) => {
+    return Observable.of(COURSES.map((course: Course) => {
       return courseToUpdate.id === course.id ? courseToUpdate : course;
     }))
       .subscribe(() => {
@@ -74,7 +73,7 @@ export class CoursesPageService {
   }
 
   deleteCourse(courseToDelete) {
-    return Rx.Observable.of(COURSES.filter((course: Course) => {
+    return Observable.of(COURSES.filter((course: Course) => {
       return courseToDelete.id !== course.id;
     }))
       .subscribe(() => {

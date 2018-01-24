@@ -25,7 +25,7 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
 
   constructor(private coursesPageService: CoursesPageService,
               public authService: AuthenticationService) {
-    this.user = null;
+    this.user = {};
     this.authUserSub = this.authService.user
       .subscribe(user => this.user = user);
     this.coursesSub = this.coursesPageService.courses
