@@ -5,8 +5,7 @@ import {Subscription} from 'rxjs/Subscription';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.less'],
-  providers: [AuthenticationService],
+  styleUrls: ['./header.component.less']
 })
 export class HeaderComponent implements OnInit, OnDestroy, AfterContentChecked {
 

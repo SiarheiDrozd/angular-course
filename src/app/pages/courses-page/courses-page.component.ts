@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, AfterContentChecked} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {CoursesPageService} from './courses-page.service';
 import {Course} from '../../modules/course/course-block/course-block.class';
 import {AuthenticationService} from '../../services';
@@ -10,7 +10,7 @@ import {Subscription} from 'rxjs/Subscription';
   styleUrls: ['./courses-page.component.less']
 })
 
-export class CoursesPageComponent implements OnInit, OnDestroy, AfterContentChecked {
+export class CoursesPageComponent implements OnInit, OnDestroy {
 
   private showDeleteModal: boolean;
   private showEditModal: boolean;
@@ -36,11 +36,6 @@ export class CoursesPageComponent implements OnInit, OnDestroy, AfterContentChec
     this.showDeleteModal = false;
     this.showEditModal = false;
     this.modalHeading = '';
-    console.log(this.user);
-  }
-
-  ngAfterContentChecked() {
-
   }
 
   showDeleteModalWindow(course) {
