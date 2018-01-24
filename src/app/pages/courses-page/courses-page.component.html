@@ -6,7 +6,6 @@
   <main class="main courses-page">
     <app-toolbox class="courses_toolbox clearfix vertical-align_parent"
                  (filter)="filterList($event)"></app-toolbox>
-    {{user?.name}}
     <ul class="courses">
       <li *ngIf="!courses"
           class="no-courses-block">
