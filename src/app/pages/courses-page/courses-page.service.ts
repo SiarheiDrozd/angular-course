@@ -1,34 +1,31 @@
 import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 import {Course} from '../../modules/course/course-block/course-block.class';
 import {COURSES} from './courses-page.data';
 
-import {Observable, BehaviorSubject} from 'rxjs/';
+import {Observable} from 'rxjs/';
 
 @Injectable()
 export class CoursesPageService {
 
-  private _courses: BehaviorSubject<Course[]> = new BehaviorSubject([]);
+  private _courses;
+  private readonly host = 'http://localhost:3004';
 
-  constructor() {
-    this.loadCourses();
+  constructor(private httpClient: HttpClient) {
+    this._courses = this.loadCourses();
   }
 
   get courses() {
-    return this._courses.asObservable();
+    return this._courses;
   }
 
   private loadCourses() {
-    return Observable.of(COURSES)
-      .subscribe(res => {
-        const courses = res.map(courseData => this.createCourse(courseData));
-        this._courses.next(courses);
-      },
-      () => console.error('Error retrieving courses')
-    );
+    return this.httpClient.get<Course[]>(`${this.host}/courses`);
   }
 
   filterCourses(filter: string, searchField: string): any {
+    // this._courses.next();
     return Observable.of(COURSES)
       .subscribe((coursesData: Course[]) => {
         let courses = this._courses.getValue();
@@ -40,24 +37,7 @@ export class CoursesPageService {
       });
   }
 
-  createCourse(courseData): Course {
-    return new Course(
-      courseData.id,
-      courseData.title,
-      courseData.duration,
-      new Date(courseData.date),
-      courseData.description,
-      courseData.topRated,
-    );
-  }
-
-  addCourse(course: Course) {
-    return Observable.of([...COURSES].push(course)).subscribe(() => {
-      const courses = this._courses.getValue();
-      courses.push(course);
-      this._courses.next(courses);
-    });
-  }
+  addCourse(course: Course) {}
 
   updateCourse(courseToUpdate) {
     return Observable.of(COURSES.map((course: Course) => {

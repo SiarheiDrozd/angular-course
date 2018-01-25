@@ -17,10 +17,11 @@ module.exports = (server) => {
 		if (courses.length < to) {
 			to = courses.length;
 		}
-		courses = courses.slice(from, to);
-		
+		// courses = courses.slice(from, to);
+    console.log(query);
+
 		res.json(courses);
 	});
-	
+
 	return router;
 };

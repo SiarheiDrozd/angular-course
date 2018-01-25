@@ -28,8 +28,8 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
     this.user = {};
     this.authUserSub = this.authService.user
       .subscribe(user => this.user = user);
-    this.coursesSub = this.coursesPageService.courses
-      .subscribe(courses => this.courses = courses);
+    this.courses = this.coursesPageService.courses;
+      // .subscribe(courses => this.courses = courses);
   }
 
   ngOnInit() {
