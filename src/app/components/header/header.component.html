@@ -6,7 +6,7 @@
   <div *ngIf="!hideLogIn"
        class="header_login-block">
     <div *ngIf="isLogged">
-      <span>{{user.name}}</span>
+      <span>{{user.name.first}} {{user.name.last}}</span>
       <span tabindex="0"
             class="block link"
             (click)="logOut($event)">

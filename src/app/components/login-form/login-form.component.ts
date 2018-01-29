@@ -1,5 +1,6 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {AuthenticationService} from '../../services';
+import {AuthorizationStatus} from '../../services/authentication/authorizationStatus.interface';
 
 @Component({
   selector: 'app-login-form',
@@ -9,7 +10,9 @@ import {AuthenticationService} from '../../services';
 })
 export class LoginFormComponent implements OnInit {
 
-  public user;
+  private user;
+  private authStatusMessage: string;
+  private authStatus: boolean;
   @Output() whenLogin = new EventEmitter();
 
   constructor(private authService: AuthenticationService) {
@@ -17,6 +20,12 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit() {
     this.user = {};
+    this.authService.authorizationStatus
+      .subscribe((authSt: AuthorizationStatus) => {
+        console.log(authSt);
+        this.authStatusMessage = authSt.message;
+        this.authStatus = authSt.status;
+      });
   }
 
   login(): void {

@@ -1,55 +1,80 @@
 import {Injectable} from '@angular/core';
-import {User} from './user';
-import {USERS} from './usersStorage';
+import {User} from './user.class';
 
 import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {AuthorizationStatus} from './authorizationStatus.interface';
 
 @Injectable()
 class AuthenticationService {
+  private _authorizationStatus: ReplaySubject<Object>;
+  private readonly host = 'http://localhost:3004';
 
-  private _isAuthenticated: BehaviorSubject<boolean>;
-  public _user: ReplaySubject<User>;
+  constructor(private httpClient: HttpClient) {
 
-  constructor() {
-    this._isAuthenticated = new BehaviorSubject(false);
-    this._user = new ReplaySubject<User>(2);
-  }
-
-  get user() {
-    return this._user;
-  }
-
-  get authenticated() {
-    return this._isAuthenticated.asObservable();
-  }
-
-  private checkUser(userToCheck) {
-    return USERS.find((user: User) => {
-      return (user.name === userToCheck.name) && (user.password === userToCheck.password);
+    this._authorizationStatus = new ReplaySubject<AuthorizationStatus>(1);
+    this._authorizationStatus.next({
+      status: false,
+      message: 'Unauthorized',
+      user: null
     });
   }
 
-  // checkUser() {
-  //   this._user.next(this._user);
-  // }
+  get authorizationStatus() {
+    return this._authorizationStatus;
+  }
 
-  logIn(userToSet): boolean {
-    userToSet = this.checkUser(userToSet);
+  logIn(userToSet) {
+    const body = {
+      login: userToSet.login,
+      password: userToSet.password
+    };
 
-    if (userToSet) {
-      this._user.next(userToSet);
-      this._isAuthenticated.next(true);
-      this.setUserInfo(userToSet);
-      return true;
-    }
-
+    this.httpClient.post(`${this.host}/auth/login`, body)
+      .subscribe(
+        (authStatus: { token: string }) => {
+          if (authStatus) {
+            const options = {
+              headers: new HttpHeaders().set('Authorization', authStatus.token)
+            };
+            this.httpClient.post(`${this.host}/auth/userinfo`, {}, options)
+              .subscribe(
+                (userData: Response) => {
+                  this._authorizationStatus.next({
+                    status: true,
+                    message: 'Authorized',
+                    user: new User(userData)
+                  });
+                  this.setUserInfo(userData);
+                });
+          }
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            console.log('An error occurred:', err.error.message);
+            this._authorizationStatus.next({
+              status: false,
+              message: 'External error',
+              user: null
+            });
+          } else {
+            console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
+            this._authorizationStatus.next({
+              status: false,
+              message: 'Wrong Login/Password pair',
+              user: null
+            });
+          }
+        });
     return false;
   }
 
   logOut() {
-    this._user.next(null);
-    this._isAuthenticated.next(false);
+    this._authorizationStatus.next({
+      status: false,
+      message: 'Unauthorized',
+      user: null
+    });
     window.localStorage.removeItem('user');
   }
 

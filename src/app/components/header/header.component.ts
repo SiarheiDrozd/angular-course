@@ -1,6 +1,7 @@
 import {Component, OnInit, OnDestroy, AfterContentChecked, Input} from '@angular/core';
 import {AuthenticationService, User} from '../../services/';
 import {Subscription} from 'rxjs/Subscription';
+import {AuthorizationStatus} from '../../services/authentication/authorizationStatus.interface';
 
 @Component({
   selector: 'app-header',
@@ -10,18 +11,22 @@ import {Subscription} from 'rxjs/Subscription';
 export class HeaderComponent implements OnInit, OnDestroy, AfterContentChecked {
 
   private authStateSub: Subscription;
-  private authUserSub: Subscription;
   public isLogged: boolean;
   public user: User;
+  public authStatus: string;
 
   @Input() hideBreadcrumbs: boolean;
   @Input() hideLogIn: boolean;
 
   constructor(private authService: AuthenticationService) {
-    this.authStateSub = this.authService.authenticated
-      .subscribe((state: boolean) => this.isLogged = state);
-    this.authUserSub = this.authService.user
-      .subscribe(user => this.user = user);
+    this.authStateSub = this.authService.authorizationStatus
+      .subscribe((state: AuthorizationStatus) => {
+        this.isLogged = state.status;
+        if (this.isLogged) {
+          this.user = state.user;
+        }
+        this.authStatus = state.message;
+      });
   }
 
   ngOnInit() {
@@ -36,12 +41,9 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterContentChecked {
 
   ngOnDestroy() {
     this.authStateSub.unsubscribe();
-    this.authUserSub.unsubscribe();
   }
 
   logOut() {
     this.authService.logOut();
   }
-
-
 }

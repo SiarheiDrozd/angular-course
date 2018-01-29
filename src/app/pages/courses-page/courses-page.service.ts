@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {Course} from '../../modules/course/course-block/course-block.class';
-import {COURSES} from './courses-page.data';
 
 import {Observable} from 'rxjs/';
 
@@ -25,10 +24,9 @@ export class CoursesPageService {
   }
 
   filterCourses(filter: string, searchField: string): any {
-    // this._courses.next();
-    return Observable.of(COURSES)
+    return this._courses
       .subscribe((coursesData: Course[]) => {
-        let courses = this._courses.getValue();
+        let courses;
         courses = coursesData.filter((course) => {
           const SEARCH = course[searchField].match(new RegExp(filter, 'gi'));
           return SEARCH && SEARCH.length > 0;
@@ -37,10 +35,11 @@ export class CoursesPageService {
       });
   }
 
-  addCourse(course: Course) {}
+  addCourse(course: Course) {
+  }
 
   updateCourse(courseToUpdate) {
-    return Observable.of(COURSES.map((course: Course) => {
+    return Observable.of(this._courses.map((course: Course) => {
       return courseToUpdate.id === course.id ? courseToUpdate : course;
     }))
       .subscribe(() => {
@@ -53,7 +52,7 @@ export class CoursesPageService {
   }
 
   deleteCourse(courseToDelete) {
-    return Observable.of(COURSES.filter((course: Course) => {
+    return Observable.of(this._courses.filter((course: Course) => {
       return courseToDelete.id !== course.id;
     }))
       .subscribe(() => {

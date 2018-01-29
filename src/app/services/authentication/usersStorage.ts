@@ -1,9 +1,9 @@
-import { User } from './user';
+import { User } from './user.class';
 
 export const USERS: User[] = [
-  {
-    name: 'User',
-    password: 'pass',
-    editPermition: true
-  }
+  // {
+  //   name: 'User',
+  //   password: 'pass',
+  //   editPermition: true
+  // }
 ];

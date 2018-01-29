@@ -8,7 +8,7 @@
     <input type="text"
            name="login"
            class="input login-form_input"
-           [(ngModel)]="user.name"
+           [(ngModel)]="user.login"
            required>
   </label>
 
@@ -22,6 +22,10 @@
            [(ngModel)]="user.password"
            required>
   </label>
+  <span class="login-form_status block center-text"
+        [ngClass]="{'valid': authStatus, 'invalid': !authStatus}">
+    {{authStatusMessage}}
+  </span>
 
   <!--<label class="magic-underline label block inline-list login-form_label vertical-align_parent">-->
     <!--<span class="login-form_label-text inline-block vertical-align_middle">-->

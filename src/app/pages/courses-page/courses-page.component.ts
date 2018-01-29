@@ -1,8 +1,10 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {CoursesPageService} from './courses-page.service';
 import {Course} from '../../modules/course/course-block/course-block.class';
-import {AuthenticationService} from '../../services';
+import {AuthenticationService, User} from '../../services';
 import {Subscription} from 'rxjs/Subscription';
+import {Observable} from 'rxjs/Observable';
+import {AuthorizationStatus} from '../../services/authentication/authorizationStatus.interface';
 
 @Component({
   selector: 'app-courses-page',
@@ -16,20 +18,17 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
   private showEditModal: boolean;
   private modalHeading: string;
   private currentCourseId: string;
-  private user;
-  private courses;
+  private user: User;
+  private courses: Observable<Course[]>;
   private authUserSub: Subscription;
-  private coursesSub: Subscription;
   private courseToDelete: Course;
   private courseToEdit: Course;
 
   constructor(private coursesPageService: CoursesPageService,
               public authService: AuthenticationService) {
-    this.user = {};
-    this.authUserSub = this.authService.user
-      .subscribe(user => this.user = user);
+    this.authUserSub = this.authService.authorizationStatus
+      .subscribe((authSt: AuthorizationStatus) => this.user = authSt.user);
     this.courses = this.coursesPageService.courses;
-      // .subscribe(courses => this.courses = courses);
   }
 
   ngOnInit() {
@@ -87,6 +86,5 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.authUserSub.unsubscribe();
-    this.coursesSub.unsubscribe();
   }
 }
