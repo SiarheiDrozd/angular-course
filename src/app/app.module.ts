@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import { ComponentsModule } from './components/components.module';
 import { CoursesPageModule, CoursesPageComponent } from './pages/courses-page/courses-page.module';
@@ -13,6 +13,7 @@ import { AuthenticationModule } from './services/authentication/authentication.m
 
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import {AuthInterceptor} from './services/authentication/auth-interceptor.class';
 
 const appRoutes: Routes = [
   { path: 'courses', component: CoursesPageComponent },
@@ -41,7 +42,9 @@ const appRoutes: Routes = [
     AuthenticationModule.forRoot(),
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

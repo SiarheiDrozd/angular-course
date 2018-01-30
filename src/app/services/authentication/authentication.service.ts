@@ -34,19 +34,31 @@ class AuthenticationService {
       .subscribe(
         (authStatus: { token: string }) => {
           if (authStatus) {
-            const options = {
-              headers: new HttpHeaders().set('Authorization', authStatus.token)
-            };
-            this.httpClient.post(`${this.host}/auth/userinfo`, {}, options)
-              .subscribe(
-                (userData: Response) => {
-                  this._authorizationStatus.next({
-                    status: true,
-                    message: 'Authorized',
-                    user: new User(userData)
-                  });
-                  this.setUserInfo(userData);
-                });
+            localStorage.setItem('userToken', authStatus.token);
+            this._authorizationStatus.next({
+              status: true,
+              message: 'Authorized',
+              user: new User({
+                'id': 3117,
+                'fakeToken': '58ebfdf7b2bab0bdb97711f4111111',
+                'name': {
+                  'first': 'Serena',
+                  'last': 'Henson'
+                },
+                'login': 'Blackburn',
+                'password': 'consectetur'
+              })
+            });
+            //   this.httpClient.post(`${this.host}/auth/userinfo`, {})
+            //     .subscribe(
+            //       (userData: Response) => {
+            //         this._authorizationStatus.next({
+            //           status: true,
+            //           message: 'Authorized',
+            //           user: new User(userData)
+            //         });
+            //         this.setUserInfo(userData);
+            //       });
           }
         },
         (err: HttpErrorResponse) => {

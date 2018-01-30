@@ -1,31 +1,40 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, OnDestroy, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {AuthenticationService} from '../../services';
 import {AuthorizationStatus} from '../../services/authentication/authorizationStatus.interface';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.less'],
-  providers: [AuthenticationService]
+  providers: [AuthenticationService],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent implements OnInit, OnDestroy {
 
   private user;
   private authStatusMessage: string;
   private authStatus: boolean;
+  private authServiceSub: Subscription;
   @Output() whenLogin = new EventEmitter();
 
   constructor(private authService: AuthenticationService) {
   }
 
   ngOnInit() {
-    this.user = {};
-    this.authService.authorizationStatus
+    this.user = {
+      login: '',
+      password: ''
+    };
+    this.authServiceSub = this.authService.authorizationStatus
       .subscribe((authSt: AuthorizationStatus) => {
-        console.log(authSt);
         this.authStatusMessage = authSt.message;
         this.authStatus = authSt.status;
       });
+  }
+
+  ngOnDestroy() {
+    this.authServiceSub.unsubscribe();
   }
 
   login(): void {
