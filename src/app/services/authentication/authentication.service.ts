@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {User} from './user.class';
 
 import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {AuthorizationStatus} from './authorizationStatus.interface';
 
 @Injectable()
@@ -11,7 +11,6 @@ class AuthenticationService {
   private readonly host = 'http://localhost:3004';
 
   constructor(private httpClient: HttpClient) {
-
     this._authorizationStatus = new ReplaySubject<AuthorizationStatus>(1);
     this._authorizationStatus.next({
       status: false,
@@ -35,30 +34,17 @@ class AuthenticationService {
         (authStatus: { token: string }) => {
           if (authStatus) {
             localStorage.setItem('userToken', authStatus.token);
-            this._authorizationStatus.next({
-              status: true,
-              message: 'Authorized',
-              user: new User({
-                'id': 3117,
-                'fakeToken': '58ebfdf7b2bab0bdb97711f4111111',
-                'name': {
-                  'first': 'Serena',
-                  'last': 'Henson'
-                },
-                'login': 'Blackburn',
-                'password': 'consectetur'
-              })
-            });
-            //   this.httpClient.post(`${this.host}/auth/userinfo`, {})
-            //     .subscribe(
-            //       (userData: Response) => {
-            //         this._authorizationStatus.next({
-            //           status: true,
-            //           message: 'Authorized',
-            //           user: new User(userData)
-            //         });
-            //         this.setUserInfo(userData);
-            //       });
+
+            this.httpClient.post(`${this.host}/auth/userinfo`, {})
+              .subscribe(
+                (userData: Response) => {
+                  this._authorizationStatus.next({
+                    status: true,
+                    message: 'Authorized',
+                    user: new User(userData)
+                  });
+                  this.setUserInfo(userData);
+                });
           }
         },
         (err: HttpErrorResponse) => {
