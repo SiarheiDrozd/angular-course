@@ -1,3 +1,5 @@
+@import './mixins';
+
 .wrapper {
   position: relative;
   margin: auto;
@@ -54,6 +56,14 @@
 
 .center-block {
   margin: auto;
+}
+
+.table {
+  display: table;
+}
+
+.table-row {
+  display: table-row;
 }
 
 .table-cell {
@@ -116,3 +126,7 @@
 .invalid {
   color: @red;
 }
+
+.property-side-generator(margin);
+
+.property-side-generator(padding);
