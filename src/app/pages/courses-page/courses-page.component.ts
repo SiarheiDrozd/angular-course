@@ -37,6 +37,13 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
     this.modalHeading = '';
   }
 
+  loadNext() {
+    this.coursesPageService.loadNext();
+  }
+  loadPrevious() {
+    this.coursesPageService.loadPrevious();
+  }
+
   showDeleteModalWindow(course) {
     this.courseToDelete = course;
     this.currentCourseId = course.id;

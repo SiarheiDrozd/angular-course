@@ -6,6 +6,16 @@
   <main class="main courses-page">
     <app-toolbox class="courses_toolbox clearfix vertical-align_parent"
                  (filter)="filterList($event)"></app-toolbox>
+    <nav class="inline-block inline-list align-middle_horizontal margin-top_m margin-bottom_m">
+      <button (click)="loadPrevious()"
+              class="button margin-right_m">
+        Previous
+      </button>
+      <button (click)="loadNext()"
+              class="button">
+        Next
+      </button>
+    </nav>
     <ul class="courses">
       <li *ngIf="!courses"
           class="no-courses-block">
@@ -25,6 +35,7 @@
         </app-course-block>
       </li>
     </ul>
+
     <app-modal *ngIf="showDeleteModal"
                (result)="handleDeleteCourse($event)">
       <h2>

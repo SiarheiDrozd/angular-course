@@ -7,17 +7,19 @@ module.exports = (server) => {
 	router.get('/courses', (req, res, next) => {
 		let url_parts = url.parse(req.originalUrl, true),
 			query = url_parts.query,
-			from = query.start,
-			to = +query.start + +query.count,
+			from = query.start || 0,
+      count = query.count || 0,
+			to = +from + +count,
 			sort = query.sort,
 			queryStr = query.query,
 			courses = server.db.getState().courses;
-		console.log(sort);
+		console.log(sort, from, count, to);
 		console.log(queryStr);
-		if (courses.length < to) {
+    console.log(req.originalUrl);
+    if (courses.length < to) {
 			to = courses.length;
 		}
-		// courses = courses.slice(from, to);
+		courses = courses.slice(from, to);
     console.log(query);
 
 		res.json(courses);
