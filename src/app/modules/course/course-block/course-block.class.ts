@@ -1,20 +1,21 @@
 import {CourseBlockInterface} from './course-block.interface';
 
 export class Course implements CourseBlockInterface {
+  public id: string;
+  public title: string;
+  public duration: number;
+  public date: Date;
+  public description: string;
+  public isTopRated?: boolean;
 
-  constructor(
-    public id: string,
-    public title: string,
-    public duration: number,
-    public date: Date,
-    public description: string,
-    public topRated?: boolean
-  ) {
-    this.id = id;
-    this.title = title;
-    this.duration = duration;
-    this.date = date;
-    this.description = description;
-    this.topRated = topRated || false;
+  constructor(obj?) {
+    if (obj) {
+      this.id = obj.id;
+      this.title = obj.title;
+      this.duration = obj.duration;
+      this.date = new Date(obj.date.toString());
+      this.description = obj.description;
+      this.isTopRated = obj.isTopRated || false;
+    }
   }
 }

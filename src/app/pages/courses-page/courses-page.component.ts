@@ -1,6 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {CoursesPageService} from './courses-page.service';
 import {Course} from '../../modules/course/course-block/course-block.class';
+import {AuthenticationService, User} from '../../services';
+import {Subscription} from 'rxjs/Subscription';
+import {Observable} from 'rxjs/Observable';
+import {AuthorizationStatus} from '../../services/authentication/authorizationStatus.interface';
 
 @Component({
   selector: 'app-courses-page',
@@ -8,44 +12,64 @@ import {Course} from '../../modules/course/course-block/course-block.class';
   styleUrls: ['./courses-page.component.less']
 })
 
-export class CoursesPageComponent implements OnInit {
-  protected courses: Course[];
+export class CoursesPageComponent implements OnInit, OnDestroy {
+
   private showDeleteModal: boolean;
   private showEditModal: boolean;
   private modalHeading: string;
   private currentCourseId: string;
+  private user: User;
+  private noCourses: boolean;
+  private courses: Observable<Course[]>;
+  private authUserSub: Subscription;
+  private coursesSub: Subscription;
   private courseToDelete: Course;
   private courseToEdit: Course;
 
-  constructor(private coursesPageService: CoursesPageService) {
+  constructor(private coursesPageService: CoursesPageService,
+              public authService: AuthenticationService) {
+    this.authUserSub = this.authService.authorizationStatus
+      .subscribe((authSt: AuthorizationStatus) => this.user = authSt.user);
+    this.courses = this.coursesPageService.courses;
+    this.coursesSub = this.courses.subscribe((courses: Course[]) => {
+      this.noCourses = !courses.length;
+    });
   }
 
   ngOnInit() {
     this.showDeleteModal = false;
     this.showEditModal = false;
     this.modalHeading = '';
-    this.getCourses();
   }
 
-  getCourses() {
-    this.courses = this.coursesPageService.getCourses();
+  ngOnDestroy() {
+    this.authUserSub.unsubscribe();
+    this.coursesSub.unsubscribe();
   }
 
-  showDeleteModalWindow(id) {
-    this.currentCourseId = id;
+  loadNext() {
+    this.coursesPageService.loadNext();
+  }
+
+  loadPrevious() {
+    this.coursesPageService.loadPrevious();
+  }
+
+  showDeleteModalWindow(course) {
+    this.courseToDelete = course;
+    this.currentCourseId = course.id;
     this.modalHeading = 'Do you really want to delete this course?';
-    this.courseToDelete = this.coursesPageService.getCourseById(id);
     this.showDeleteModal = true;
   }
 
-  showEditModalWindow(id) {
-    this.courseToEdit = {...this.coursesPageService.getCourseById(id)};
+  showEditModalWindow(course) {
+    this.courseToEdit = course;
     this.showEditModal = true;
   }
 
   handleDeleteCourse(result) {
     if (result) {
-      this.courses = [...this.coursesPageService.deleteCourse(this.currentCourseId)];
+      this.coursesPageService.deleteCourse(this.courseToDelete);
     }
     this.showDeleteModal = false;
   }
@@ -53,7 +77,6 @@ export class CoursesPageComponent implements OnInit {
   handleEditCourse(result) {
     if (result) {
       this.coursesPageService.updateCourse(this.courseToEdit);
-      this.getCourses();
     }
     this.showEditModal = false;
   }
@@ -76,6 +99,6 @@ export class CoursesPageComponent implements OnInit {
   }
 
   filterList(filterValue) {
-    this.courses = this.coursesPageService.filterCourses(filterValue, 'date');
+    this.coursesPageService.filterCourses(filterValue, 'title');
   }
 }

@@ -1,22 +1,25 @@
 <section id="{{course.id}}"
-         class="course-block clearfix">
-  <div class="course-block_description inline-block float-left">
-    <header class="course-block_header">
-      <h2 class="heading">
+         class="course-block clearfix inline-list">
+  <div class="course-block_description inline-block"
+       [ngClass]="{'full-width': !edit}">
+    <header class="course-block_header vertical-align_parent">
+      <h2 class="heading vertical-align_child">
         {{course.title | uppercase}}
       </h2>
-      <span>{{course.duration | duration}}</span>
-      <i class="fa-star"
-         [ngClass]="{'fas': course.topRated, 'far': !course.topRated}"
-         (click)="rateCourse($event)"></i>
+      <span class="vertical-align_child">
+        {{course.duration | duration}}
+        <i class="fa-star"
+                 [ngClass]="{'fas': course.topRated, 'far': !course.topRated}"
+                 (click)="rateCourse($event)"></i>
+      </span>
       <span class="float-right">{{course.date | date}}</span>
     </header>
     <p>
       {{course.description}}
     </p>
   </div>
-  <div *ngIf="true"
-       class="course-block_controls inline-block float-right">
+  <div *ngIf="edit"
+       class="course-block_controls inline-block align-middle_vertical">
     <button class="button course-block_button capitalize"
             (click)="emitEdit($event)">
       edit

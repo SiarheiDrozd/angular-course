@@ -70,13 +70,29 @@ a:hover {
 }
 
 .label {
-  height: @height-input;
+  min-height: @height-input;
+
+  .label-text {
+
+    &__half-width {
+      width: 50%;
+    }
+  }
+  .input__centered {
+    width: 50%;
+    text-align: center;
+  }
 }
 
-.input[type="text"] {
+.input{
   height: @height-input;
+  border: 1px solid lighten(@green, 40%);
   padding: @padding-s @padding-xl;
-  border: none;
+
+  &[type="checkbox"] {
+    height: @height-input / 2;
+    border: none;
+  }
 }
 
 .link {

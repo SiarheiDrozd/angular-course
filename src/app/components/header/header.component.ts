@@ -1,34 +1,50 @@
-import {Component, OnInit, ChangeDetectorRef, Input} from '@angular/core';
+import {Component, OnInit, OnDestroy, AfterContentChecked, Input, ChangeDetectionStrategy} from '@angular/core';
 import {AuthenticationService, User} from '../../services/';
+import {Subscription} from 'rxjs/Subscription';
+import {AuthorizationStatus} from '../../services/authentication/authorizationStatus.interface';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less'],
-  providers: [AuthenticationService]
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy, AfterContentChecked {
 
-  private isLogged: boolean;
-  private user: User;
+  private authStateSub: Subscription;
+  public isLogged: boolean;
+  public user: User;
+  public authStatus: string;
 
   @Input() hideBreadcrumbs: boolean;
   @Input() hideLogIn: boolean;
 
-  constructor(private _authService: AuthenticationService) {
+  constructor(private authService: AuthenticationService) {
+    this.authStateSub = this.authService.authorizationStatus
+      .subscribe((state: AuthorizationStatus) => {
+        this.isLogged = state.status;
+        if (this.isLogged) {
+          this.user = Object.assign(state.user);
+        }
+        this.authStatus = state.message;
+      });
   }
 
   ngOnInit() {
-    this.isLogged = this._authService.isAuthenticated();
-    if (this.isLogged) {
-      this.user = this._authService.getUserInfo();
+  }
+
+  ngAfterContentChecked() {
+    const STORED_USER = this.authService.getUserInfo();
+    if (STORED_USER && !this.isLogged) {
+      this.authService.logIn(STORED_USER);
     }
   }
 
-  logOff() {
-    this._authService.logout();
-    this.isLogged = this._authService.isAuthenticated();
-    this.user = null;
+  ngOnDestroy() {
+    this.authStateSub.unsubscribe();
   }
 
+  logOut() {
+    this.authService.logOut();
+  }
 }

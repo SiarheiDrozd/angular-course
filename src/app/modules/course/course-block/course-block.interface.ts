@@ -4,6 +4,5 @@ export interface CourseBlockInterface {
   date: Date;
   duration: number;
   description: string;
-  controls?: object[];
   topRated?: boolean;
 }

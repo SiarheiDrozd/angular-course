@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-login-page',
@@ -7,12 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _location: Location) { }
 
   ngOnInit() {
   }
 
-  handleLogin() {
-
+  handleLogin(result) {
+    if (result.success) {
+      this._location.back();
+    }
   }
 }

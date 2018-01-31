@@ -1,33 +1,53 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {AuthenticationService, User} from '../../services';
+import {Component, OnInit, OnDestroy, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import {AuthenticationService} from '../../services';
+import {AuthorizationStatus} from '../../services/authentication/authorizationStatus.interface';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.less'],
-  providers: [AuthenticationService]
+  providers: [AuthenticationService],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent implements OnInit, OnDestroy {
 
-  private user: User;
-  @Output() onLogin = new EventEmitter();
+  private user;
+  private authStatusMessage: string;
+  private authStatus: boolean;
+  private authServiceSub: Subscription;
+  @Output() whenLogin = new EventEmitter();
 
-  constructor(private _authService: AuthenticationService) {
-    this.user = {
-      name: 'User',
-      password: 'pass'
-    };
+  constructor(private authService: AuthenticationService) {
   }
 
   ngOnInit() {
-    this.user = this._authService.getUserInfo() || this.user;
+    this.user = {
+      login: '',
+      password: ''
+    };
+    this.authServiceSub = this.authService.authorizationStatus
+      .subscribe((authSt: AuthorizationStatus) => {
+        this.authStatusMessage = authSt.message;
+        this.authStatus = authSt.status;
+      });
+  }
+
+  ngOnDestroy() {
+    this.authServiceSub.unsubscribe();
   }
 
   login(): void {
-    this._authService.login(this.user);
-
-    if (this._authService.isAuthenticated()) {
-      this.onLogin.emit();
+    if (this.authService.logIn(this.user)) {
+      this.whenLogin.emit({
+        success: true,
+        user: this.user
+      });
+    } else {
+      this.whenLogin.emit({
+        success: false,
+        user: null
+      });
     }
   }
 }

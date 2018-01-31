@@ -1,5 +1,6 @@
 <form action=""
       class="login-form">
+
   <label class="magic-underline block inline-list login-form_label">
     <span class="login-form_label-text inline-block">
       Login
@@ -7,9 +8,10 @@
     <input type="text"
            name="login"
            class="input login-form_input"
-           [(ngModel)]="user.name"
+           [(ngModel)]="user.login"
            required>
   </label>
+
   <label class="magic-underline block inline-list login-form_label">
     <span class="login-form_label-text inline-block">
       Password
@@ -20,8 +22,23 @@
            [(ngModel)]="user.password"
            required>
   </label>
+  <span class="login-form_status block center-text"
+        [ngClass]="{'valid': authStatus, 'invalid': !authStatus}">
+    {{authStatusMessage}}
+  </span>
+
+  <!--<label class="magic-underline label block inline-list login-form_label vertical-align_parent">-->
+    <!--<span class="login-form_label-text inline-block vertical-align_middle">-->
+      <!--Edit permition-->
+    <!--</span>-->
+    <!--<input type="checkbox"-->
+           <!--class="input login-form_input vertical-align_middle"-->
+           <!--name="editPermition"-->
+           <!--[(ngModel)]="authService.user.editPermition">-->
+  <!--</label>-->
+
   <input type="submit"
          value="Enter"
          class="button login-form_submit"
-         (click)="login(user)">
+         (click)="login()">
 </form>

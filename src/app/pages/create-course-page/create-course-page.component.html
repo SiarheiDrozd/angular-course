@@ -1,0 +1,84 @@
+<div class="wrapper">
+  <header class="header">
+    <app-header></app-header>
+  </header>
+
+  <main class="main">
+    <div class="wrapper__create-course">
+
+      <label class="magic-underline label block inline-list">
+        <span class="label-text__half-width center-text">
+          Title
+        </span>
+        <input type="text"
+               class="input">
+      </label>
+
+      <label class="magic-underline label block inline-list">
+        <span class="label-text__half-width center-text">
+          Description
+        </span>
+        <textarea type="text"
+                  class="input textarea_description"></textarea>
+      </label>
+
+      <label class="magic-underline label block inline-list">
+        <span class="label-text__half-width center-text">
+          Date
+        </span>
+        <input type="date"
+               class="input">
+      </label>
+
+      <label class="magic-underline label block inline-list">
+        <span class="label-text__half-width center-text">
+          Duration
+        </span>
+        <input type="number"
+               class="input input_duration"
+               name="duration"
+               [(ngModel)]="durationVal">
+        <span class="text_duration">{{durationVal | duration}}</span>
+      </label>
+
+      <label class="magic-underline label block inline-list">
+        <span class="label-text__half-width center-text align-middle_vertical">
+          Authors
+        </span>
+        <span class="label-text__half-width inline-list">
+          <select multiple
+                  class="block create-course_select">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+          <span class="block">
+            <button class="block">
+              >
+            </button>
+            <button class="block">
+              <
+            </button>
+          </span>
+          <select multiple
+                  class="block create-course_select">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+        </span>
+      </label>
+
+      <div class="align-middle_horizontal inline-block">
+        <button class="button">Save</button>
+        <button class="button">Cancel</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <app-footer></app-footer>
+  </footer>
+</div>
