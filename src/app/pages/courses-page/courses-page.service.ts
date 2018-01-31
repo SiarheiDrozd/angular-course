@@ -25,7 +25,6 @@ export class CoursesPageService {
   }
 
   get courses() {
-    console.log(this._courses.getValue());
     return this._courses.asObservable();
   }
 
@@ -85,15 +84,17 @@ export class CoursesPageService {
   }
 
   deleteCourse(courseToDelete) {
-    return Observable.of(this._courses.filter((course: Course) => {
-      return courseToDelete.id !== course.id;
-    }))
-      .subscribe(() => {
-          const courses = this._courses.getValue();
-          const index = courses.findIndex((course) => course.id === courseToDelete.id);
-          courses.splice(index, 1);
-          this._courses.next(courses);
-        }
-      );
+    let params = new HttpParams();
+    params = params.append('id', '' + courseToDelete.id);
+
+    this.httpClient.delete(`${this.host}/courses`, {params: params})
+      .subscribe((data) => {
+        console.log(data);
+      });
+
+    this.loadCourses(this.start, this.count)
+      .subscribe(data => {
+        this._courses.next(data);
+      });
   }
 }

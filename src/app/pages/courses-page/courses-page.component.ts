@@ -19,8 +19,10 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
   private modalHeading: string;
   private currentCourseId: string;
   private user: User;
+  private noCourses: boolean;
   private courses: Observable<Course[]>;
   private authUserSub: Subscription;
+  private coursesSub: Subscription;
   private courseToDelete: Course;
   private courseToEdit: Course;
 
@@ -29,6 +31,9 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
     this.authUserSub = this.authService.authorizationStatus
       .subscribe((authSt: AuthorizationStatus) => this.user = authSt.user);
     this.courses = this.coursesPageService.courses;
+    this.coursesSub = this.courses.subscribe((courses: Course[]) => {
+      this.noCourses = !courses.length;
+    });
   }
 
   ngOnInit() {
@@ -37,9 +42,15 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
     this.modalHeading = '';
   }
 
+  ngOnDestroy() {
+    this.authUserSub.unsubscribe();
+    this.coursesSub.unsubscribe();
+  }
+
   loadNext() {
     this.coursesPageService.loadNext();
   }
+
   loadPrevious() {
     this.coursesPageService.loadPrevious();
   }
@@ -89,9 +100,5 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
 
   filterList(filterValue) {
     this.coursesPageService.filterCourses(filterValue, 'title');
-  }
-
-  ngOnDestroy() {
-    this.authUserSub.unsubscribe();
   }
 }
