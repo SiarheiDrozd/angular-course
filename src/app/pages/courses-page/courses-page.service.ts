@@ -10,17 +10,19 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 export class CoursesPageService {
 
   private _courses: BehaviorSubject<any>;
-  private start;
+  private page;
   private count;
   private readonly host = 'http://localhost:3004';
 
   constructor(private httpClient: HttpClient) {
-    this.start = 0;
+    this.page = 0;
     this.count = 3;
     this._courses = new BehaviorSubject([]);
-    this.loadCourses(this.start, this.count)
+    this.loadCourses(this.page, this.count)
       .subscribe(data => {
-        this._courses.next(data);
+        if (data.length > 0) {
+          this._courses.next(data);
+        }
       });
   }
 
@@ -48,21 +50,22 @@ export class CoursesPageService {
   }
 
   loadNext() {
-    this.loadCourses(this.start + this.count - 1, this.count)
+    this.loadCourses(this.page * this.count, this.count)
       .subscribe(data => {
         if (data.length > 0) {
           this._courses.next(data);
-          this.start += this.count - 1;
         }
       });
   }
 
   loadPrevious() {
-    this.loadCourses(this.start - this.count - 1, this.count)
+    this.loadCourses(this.page * this.count, this.count)
       .subscribe(data => {
         if (data.length > 0) {
           this._courses.next(data);
-          this.start -= this.count - 1;
+          if (this.page > 0) {
+            this.page--;
+          }
         }
       });
   }
@@ -92,7 +95,7 @@ export class CoursesPageService {
         console.log(data);
       });
 
-    this.loadCourses(this.start, this.count)
+    this.loadCourses(this.page, this.count)
       .subscribe(data => {
         this._courses.next(data);
       });

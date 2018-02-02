@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { ComponentsModule } from './components/components.module';
 import { CoursesPageModule, CoursesPageComponent } from './pages/courses-page/courses-page.module';
@@ -34,6 +34,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     ComponentsModule,
     CoursesPageModule,
     LoginPageModule,
