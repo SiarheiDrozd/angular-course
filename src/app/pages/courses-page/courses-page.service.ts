@@ -1,74 +1,100 @@
 import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+
 import {Course} from '../../modules/course/course-block/course-block.class';
-import { COURSES } from './courses-page.data';
-// const COURSES = null;
+
+import {Observable} from 'rxjs/';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class CoursesPageService {
 
-  public courses: Course[];
+  private _courses: BehaviorSubject<any>;
+  private start;
+  private count;
+  private readonly host = 'http://localhost:3004';
 
-  constructor() {
-    this.courses = this.loadCourses();
+  constructor(private httpClient: HttpClient) {
+    this.start = 0;
+    this.count = 3;
+    this._courses = new BehaviorSubject([]);
+    this.loadCourses(this.start, this.count)
+      .subscribe(data => {
+        this._courses.next(data);
+      });
   }
 
-  private loadCourses(): Course[] {
-    if (COURSES && Array.isArray(COURSES)) {
-      return COURSES.map(courseData => this.createCourse(courseData));
-    } else {
-      return null;
-    }
+  get courses() {
+    return this._courses.asObservable();
   }
 
-  private getCourseIndex(course: Course): number {
-    return this.courses.indexOf(this.getCourseById(course.id));
+  private loadCourses(start: number, count: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('start', '' + start);
+    params = params.append('count', '' + count);
+    return this.httpClient.get(`${this.host}/courses`, {params: params});
   }
 
-  getCourses(): Course[] {
-    this.courses = this.courses || this.loadCourses();
-    return this.courses;
+  filterCourses(filter: string, searchField: string): any {
+    return this._courses
+      .subscribe((coursesData: Course[]) => {
+        let courses;
+        courses = coursesData.filter((course) => {
+          const SEARCH = course[searchField].match(new RegExp(filter, 'gi'));
+          return SEARCH && SEARCH.length > 0;
+        });
+        this._courses.next(courses);
+      });
   }
 
-  filterCourses(filter: string, searchField: string): Course[] {
-    return this.courses.filter(course => {
-      const SEARCH = course[searchField].match(new RegExp(filter, 'gi'));
-      return SEARCH && SEARCH.length > 0;
-    });
+  loadNext() {
+    this.loadCourses(this.start + this.count - 1, this.count)
+      .subscribe(data => {
+        if (data.length > 0) {
+          this._courses.next(data);
+          this.start += this.count - 1;
+        }
+      });
   }
 
-  createCourse(courseData): Course {
-    return new Course(
-      courseData.id,
-      courseData.title,
-      courseData.duration,
-      new Date(courseData.date),
-      courseData.description,
-      courseData.topRated,
-      );
+  loadPrevious() {
+    this.loadCourses(this.start - this.count - 1, this.count)
+      .subscribe(data => {
+        if (data.length > 0) {
+          this._courses.next(data);
+          this.start -= this.count - 1;
+        }
+      });
   }
 
-  addCourse(course: Course): Course[] {
-    let newCourses = [...this.courses];
-    newCourses.push(course);
-    this.courses = newCourses;
-    return this.courses;
-  }
-
-  getCourseById(id) {
-    return this.courses.find(item => item.id === id);
+  addCourse(course: Course) {
   }
 
   updateCourse(courseToUpdate) {
-    let newCourses = [...this.courses];
-    newCourses.splice(this.getCourseIndex(courseToUpdate), 1, courseToUpdate);
-    this.courses = newCourses;
+    return Observable.of(this._courses.map((course: Course) => {
+      return courseToUpdate.id === course.id ? courseToUpdate : course;
+    }))
+      .subscribe(() => {
+          const courses = this._courses.getValue();
+          const index = courses.findIndex((course) => course.id === courseToUpdate.id);
+          courses.splice(index, 1, courseToUpdate);
+          this._courses.next(courses);
+        }
+      );
   }
 
-  deleteCourse(id): Course[] {
-    this.courses = this.courses.filter(element => {
-      return element.id !== id;
-    });
+  deleteCourse(courseToDelete) {
+    let params = new HttpParams();
+    params = params.append('id', '' + courseToDelete.id);
 
-    return this.courses;
+    this.httpClient.delete(`${this.host}/courses`, {params: params})
+      .subscribe((data) => {
+        console.log(data);
+      });
+
+    this.loadCourses(this.start, this.count)
+      .subscribe(data => {
+        this._courses.next(data);
+      });
   }
 }

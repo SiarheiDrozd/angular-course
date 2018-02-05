@@ -1,0 +1,26 @@
+@sides: top, right, bottom, left;
+
+.property-side-generator(@property-name, @indexPrefix: 1) when (@indexPrefix =< length(@sides)) {
+  @side: extract(@sides, @indexPrefix);
+
+  .property-size-generator(@property-name, @side);
+
+  .property-side-generator(@property-name, @indexPrefix + 1);
+
+}
+
+// ************************
+@sizes-prefix: s, m, l, xl;
+
+.property-size-generator(@property-name, @side, @indexPrefix: 1) when (@indexPrefix =< length(@sizes-prefix)) {
+  @prefix: extract(@sizes-prefix, @indexPrefix);
+
+  .@{property-name}-@{side}_@{prefix} {
+    @value: "@{property-name}-@{prefix}";
+      @{property-name}-@{side}: @@value;
+  }
+
+  .property-size-generator(@property-name, @side, @indexPrefix + 1);
+}
+
+// ************************

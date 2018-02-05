@@ -4,10 +4,11 @@ import {Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy}
   selector: 'app-course-block',
   templateUrl: './course-block.component.html',
   styleUrls: ['./course-block.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseBlockComponent implements OnInit {
-  @Input('course') course;
+  @Input() course;
+  @Input() edit;
   @Output() courseDeleted = new EventEmitter();
   @Output() courseEdited = new EventEmitter();
   @Output() courseRated = new EventEmitter();
@@ -19,11 +20,11 @@ export class CourseBlockComponent implements OnInit {
   }
 
   emitEdit() {
-    this.courseEdited.emit(this.course.id);
+    this.courseEdited.emit(this.course);
   }
 
   emitDelete() {
-    this.courseDeleted.emit(this.course.id);
+    this.courseDeleted.emit(this.course);
   }
 
   rateCourse() {

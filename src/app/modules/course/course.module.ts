@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CourseBlockComponent } from './course-block/course-block.component';
-import { DurationPipe } from '../../pipes';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    PipesModule
   ],
   declarations: [
-    CourseBlockComponent,
-    DurationPipe,
+    CourseBlockComponent
   ],
   exports: [
     CourseBlockComponent

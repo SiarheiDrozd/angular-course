@@ -1,3 +1,5 @@
+@import './mixins';
+
 .wrapper {
   position: relative;
   margin: auto;
@@ -40,8 +42,28 @@
   vertical-align: middle;
 }
 
+.vertical-align_child {
+  vertical-align: middle;
+}
+
 .capitalize {
   text-transform: capitalize;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.center-block {
+  margin: auto;
+}
+
+.table {
+  display: table;
+}
+
+.table-row {
+  display: table-row;
 }
 
 .table-cell {
@@ -51,7 +73,19 @@
 .align-middle {
   position: relative;
   top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  &_vertical {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &_horizontal {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .inline-list {
@@ -85,3 +119,14 @@
     }
   }
 }
+
+.valid {
+  color: @green;
+}
+.invalid {
+  color: @red;
+}
+
+.property-side-generator(margin);
+
+.property-side-generator(padding);
