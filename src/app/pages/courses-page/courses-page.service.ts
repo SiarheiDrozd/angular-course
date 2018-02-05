@@ -18,7 +18,7 @@ export class CoursesPageService {
     this.page = 0;
     this.count = 3;
     this._courses = new BehaviorSubject([]);
-    this.loadCourses(this.page, this.count)
+    this.loadCourses()
       .subscribe(data => {
         if (data.length > 0) {
           this._courses.next(data);
@@ -30,7 +30,7 @@ export class CoursesPageService {
     return this._courses.asObservable();
   }
 
-  private loadCourses(start: number, count: number): Observable<any> {
+  private loadCourses(start: number = this.page * this.count, count: number = this.count): Observable<any> {
     let params = new HttpParams();
     params = params.append('start', '' + start);
     params = params.append('count', '' + count);
@@ -50,24 +50,28 @@ export class CoursesPageService {
   }
 
   loadNext() {
-    this.loadCourses(this.page * this.count, this.count)
+    this.page++;
+    this.loadCourses(this.page * this.count)
       .subscribe(data => {
+        console.log(data.length);
         if (data.length > 0) {
           this._courses.next(data);
+        } else {
+          this.page--;
         }
       });
   }
 
   loadPrevious() {
-    this.loadCourses(this.page * this.count, this.count)
-      .subscribe(data => {
-        if (data.length > 0) {
-          this._courses.next(data);
-          if (this.page > 0) {
-            this.page--;
+    if (this.page > 0) {
+      this.page--;
+      this.loadCourses(this.page * this.count)
+        .subscribe(data => {
+          if (data.length > 0) {
+            this._courses.next(data);
           }
-        }
-      });
+        });
+    }
   }
 
   addCourse(course: Course) {

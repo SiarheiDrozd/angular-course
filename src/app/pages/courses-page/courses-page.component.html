@@ -6,7 +6,8 @@
   <main class="main courses-page">
     <app-toolbox class="courses_toolbox clearfix vertical-align_parent"
                  (filter)="filterList($event)"></app-toolbox>
-    <nav class="inline-block inline-list align-middle_horizontal margin-top_m margin-bottom_m">
+    <nav *ngIf="!noCourses"
+      class="inline-block inline-list align-middle_horizontal margin-top_m margin-bottom_m">
       <button (click)="loadPrevious()"
               class="button margin-right_m">
         Previous
