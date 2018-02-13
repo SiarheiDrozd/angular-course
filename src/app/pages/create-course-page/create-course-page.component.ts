@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-create-course-page',
@@ -8,7 +9,8 @@ import {Component, OnInit} from '@angular/core';
 export class CreateCoursePageComponent implements OnInit {
 
   authorsList: any[];
-  constructor() {
+
+  constructor(private _location: Location) {
   }
 
   ngOnInit() {
@@ -24,5 +26,9 @@ export class CreateCoursePageComponent implements OnInit {
 
   submit(form) {
     console.log(form);
+  }
+
+  back() {
+    this._location.back();
   }
 }

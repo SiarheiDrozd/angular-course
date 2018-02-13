@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, HostBinding, forwardRef} from '@angular/core';
+import {Component, forwardRef} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
@@ -15,32 +15,33 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 })
 export class DateInputComponent implements ControlValueAccessor {
 
-  inputValue: string;
-  onChange: (val: string) => void;
-  onTouched: (val: string) => void;
+  private _value: string;
+
+  public onChange: Function;
+  public onTouched: Function;
 
   get value(): string {
-    return this.formatDate();
+    return this._value;
   }
 
-  constructor() {
+  set value(value: string) {
+    if (value !== this._value) {
+      this._value = value;
+      if (this.onChange) {
+        this.onChange(this._value);
+      }
+    }
   }
 
-  formatDate(): string {
-    console.log(this.inputValue);
-    return 'val';
+  writeValue(value: any) {
+    this._value = value;
   }
 
-  writeValue(val: string) {
-    console.log(val);
-    this.inputValue = val;
-  }
-
-  registerOnChange(fn: (val: string) => void): void {
+  registerOnChange(fn: any) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: (val: string) => void): void {
+  registerOnTouched(fn: any) {
     this.onTouched = fn;
   }
 }
