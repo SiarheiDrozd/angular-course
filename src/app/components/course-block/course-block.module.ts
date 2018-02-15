@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CourseBlockComponent } from './course-block/course-block.component';
+import { CourseBlockComponent } from './course-block.component';
 import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({

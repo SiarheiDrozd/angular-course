@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 
-import {Course} from '../../modules/course/course-block/course-block.class';
+import {Course} from '../../components/course-block/course-block.class';
 
 import {Observable} from 'rxjs/';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';

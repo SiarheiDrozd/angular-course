@@ -1,6 +1,6 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {CoursesPageService} from './courses-page.service';
-import {Course} from '../../modules/course/course-block/course-block.class';
+import {Course} from '../../components/course-block/course-block.class';
 import {AuthenticationService, User} from '../../services';
 import {Subscription} from 'rxjs/Subscription';
 import {Observable} from 'rxjs/Observable';
