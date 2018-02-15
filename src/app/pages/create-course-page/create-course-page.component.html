@@ -11,7 +11,8 @@
           Title
         </span>
         <input type="text"
-               class="input">
+               class="input"
+               [(ngModel)]="course.title">
       </label>
 
       <label class="magic-underline label block inline-list">
@@ -19,7 +20,8 @@
           Description
         </span>
         <textarea type="text"
-                  class="input textarea_description"></textarea>
+                  class="input textarea_description"
+                  [(ngModel)]="course.description"></textarea>
       </label>
 
       <label class="magic-underline label block inline-list">
@@ -27,7 +29,8 @@
           Date
         </span>
         <input type="date"
-               class="input">
+               class="input"
+               [(ngModel)]="course.date">
       </label>
 
       <label class="magic-underline label block inline-list">
@@ -37,8 +40,8 @@
         <input type="number"
                class="input input_duration"
                name="duration"
-               [(ngModel)]="durationVal">
-        <span class="text_duration">{{durationVal | duration}}</span>
+               [(ngModel)]="course.duration">
+        <span class="text_duration">{{course.duration | duration}}</span>
       </label>
 
       <label class="magic-underline label block inline-list">
@@ -73,7 +76,7 @@
 
       <div class="align-middle_horizontal inline-block">
         <button class="button">Save</button>
-        <button class="button">Cancel</button>
+        <button class="button" (click)="back()">Cancel</button>
       </div>
     </div>
   </main>

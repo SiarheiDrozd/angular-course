@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, AfterContentChecked, Input, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, OnDestroy, AfterContentChecked, Input} from '@angular/core';
 import {AuthenticationService, User} from '../../services/';
 import {Subscription} from 'rxjs/Subscription';
 import {AuthorizationStatus} from '../../services/authentication/authorizationStatus.interface';
@@ -6,8 +6,7 @@ import {AuthorizationStatus} from '../../services/authentication/authorizationSt
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.less'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./header.component.less']
 })
 export class HeaderComponent implements OnInit, OnDestroy, AfterContentChecked {
 

@@ -20,9 +20,22 @@ module.exports = (server) => {
       to = courses.length;
     }
     courses = courses.slice(from, to);
-    console.log(query);
+    // console.log(query);
 
     res.json(courses);
+  });
+
+  router.get('/course', (req, res) => {
+    let url_parts = url.parse(req.originalUrl, true),
+      query = url_parts.query,
+      courseId = query.id,
+      courses = server.db.getState().courses;
+
+    const COURSE = courses.find( course => {
+      return course.id === courseId;
+    });
+
+    res.json(COURSE);
   });
 
   router.delete('/courses', (req, res, next) => {

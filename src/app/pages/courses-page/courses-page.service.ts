@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 
-import {Course} from '../../components/course-block/course-block.class';
+import {Course} from './course-block/course-block.class';
 
 import {Observable} from 'rxjs/';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
@@ -33,6 +33,12 @@ export class CoursesPageService {
     params = params.append('start', '' + start);
     params = params.append('count', '' + count);
     return this.httpClient.get(`${this.host}/courses`, {params: params});
+  }
+
+  loadCourse(id) {
+    let params = new HttpParams();
+    params = params.append('id', '' + id);
+    return this.httpClient.get(`${this.host}/course`, {params: params});
   }
 
   filterCourses(filter: string, searchField: string): any {

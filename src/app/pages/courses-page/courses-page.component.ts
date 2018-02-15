@@ -1,6 +1,6 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 import {CoursesPageService} from './courses-page.service';
-import {Course} from '../../components/course-block/course-block.class';
+import {Course} from './course-block/course-block.class';
 import {AuthenticationService, User} from '../../services';
 import {Subscription} from 'rxjs/Subscription';
 import {Observable} from 'rxjs/Observable';
@@ -9,7 +9,8 @@ import {AuthorizationStatus} from '../../services/authentication/authorizationSt
 @Component({
   selector: 'app-courses-page',
   templateUrl: './courses-page.component.html',
-  styleUrls: ['./courses-page.component.less']
+  styleUrls: ['./courses-page.component.less'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class CoursesPageComponent implements OnInit, OnDestroy {
