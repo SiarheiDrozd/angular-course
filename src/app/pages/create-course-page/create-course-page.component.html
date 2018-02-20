@@ -58,9 +58,11 @@
 
         <label class="magic-underline label block inline-list">
           <span class="label-text__half-width center-text">
-            Authors
+            Authors {{courseAuthors.length}}
           </span>
-          <app-checkbox-list [list]="authorsList"></app-checkbox-list>
+          <app-checkbox-list [(ngModel)]="courseAuthors"
+                             [fullList]="authorsList"
+                             name="authors"></app-checkbox-list>
         </label>
 
         <div class="align-middle_horizontal inline-block">

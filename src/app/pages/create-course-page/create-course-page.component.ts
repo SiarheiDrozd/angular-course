@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-create-course-page',
@@ -8,18 +10,27 @@ import {Location} from '@angular/common';
 })
 export class CreateCoursePageComponent implements OnInit {
 
-  authorsList: any[];
+  public authorsList: Observable<any>;
+  public courseAuthors: any[];
 
-  constructor(private _location: Location) {
+  constructor(private _location: Location, private _http: HttpClient) {
   }
 
   ngOnInit() {
-    this.authorsList = [
+    this._http.get('http://localhost:3004/authors')
+      .subscribe((data: any) => {
+        this.authorsList = data.map(item => {
+          return {label: `${item.firstName} ${item.lastName}`, checked: false, data: item};
+        });
+      });
+    this.courseAuthors = [
       {
-        label: 'John'
+        'firstName': 'Autumn',
+        'lastName': 'Solis'
       },
       {
-        label: 'doe'
+        'firstName': 'Bell',
+        'lastName': 'Hull'
       }
     ];
   }
