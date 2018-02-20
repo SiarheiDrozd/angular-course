@@ -1,10 +1,11 @@
 <ul class="checkBoxList-list">
-  <li *ngFor="let item of fullList"
+  <li *ngFor="let item of _fullList; let i = index"
       class="checkBoxList-list_item">
     <label class="checkBoxList_item-label">
-      <input id="checkBoxList-item_{{index}}"
+      <input id="checkBoxList-item_{{i}}"
              class="checkBoxList_item-input"
-             (change)="changeState(item)"
+             [(ngModel)]="_fullList[i].checked"
+             (click)="click()"
              type="checkbox">
       {{item.label}}
     </label>

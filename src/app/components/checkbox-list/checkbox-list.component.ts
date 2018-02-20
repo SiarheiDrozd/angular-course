@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterContentInit, Input, forwardRef} from '@angular/core';
+import {Component, OnInit, Input, forwardRef} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
@@ -13,44 +13,52 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
     }
   ]
 })
-export class CheckboxListComponent implements ControlValueAccessor, OnInit, AfterContentInit {
-  @Input() fullList: any[];
+export class CheckboxListComponent implements ControlValueAccessor, OnInit {
+  private _fullList: Array<{ label: string, checked: boolean, data? }>;
+  private _checkedList: any[];
+
+  @Input()
+  set fullList(list: Array<{ label: string, checked: boolean, data? }>) {
+    this._fullList = list;
+  };
 
   public onChange: Function;
   public onTouched: Function;
 
-  public listToDisplay;
-  private _checkedList: any[];
-
+  set value(value) {
+    this._checkedList = value;
+  }
+  get value() {
+    if (this._fullList) {
+      return this._fullList.reduce((result, item) => {
+        if (item.checked) {
+          result.push(item.data);
+        }
+        return result;
+      }, [])
+    }
+    return [];
+  }
   constructor() {
-    console.log(this.fullList);
-    this.listToDisplay = this.fullList;
   }
 
   ngOnInit() {
-    console.log(this.fullList);
-  }
-  ngAfterContentInit() {
-    console.log(this.fullList);
-
-  }
-  get value(): any[] {
-    return Array.from(this._checkedList);
+    // setInterval(context => context._checkedList.push({}), 1000, this);
   }
 
-  set value(value: any[]) {
-    this._checkedList = value;
-    if (this.onChange) {
-      this.onChange(this._checkedList);
-    }
-  }
-
-  changeState(item) {
-    console.log(item);
+  click() {
+    let result = this._fullList.reduce((result, item) => {
+      if (item.checked) {
+        result.push(item.data);
+      }
+      return result;
+    }, []);
+    console.log(result);
   }
 
   writeValue(value: any[]) {
-    this._checkedList = value;
+    this.value = value;
+    // this.onChange(this.value);
   }
 
   registerOnChange(fn: any) {
