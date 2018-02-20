@@ -44,7 +44,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     this.authServiceSub.unsubscribe();
   }
 
-  login(): void {
-    this.authService.logIn(this.user);
+  submit(form): void {
+    this.authService.logIn(form.value);
   }
 }

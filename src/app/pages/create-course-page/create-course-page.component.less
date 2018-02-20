@@ -2,6 +2,7 @@
 
 .wrapper__create-course {
   width: 60%;
+  height: 100%;
   margin: auto;
 
   .label {
@@ -20,14 +21,25 @@
     }
 
     .textarea_description {
-      min-height: 50px;
+      resize: vertical;
+      min-height: 100px;
       width: 50%;
     }
   }
 
-}
+  .checkBoxList-list {
+    width: 50%;
+    background: @white;
 
-.create-course_select {
-  &:extend(.input);
-  width: 100%;
+    &_item {
+
+      &-label {
+
+      }
+
+      &-input {
+
+      }
+    }
+  }
 }

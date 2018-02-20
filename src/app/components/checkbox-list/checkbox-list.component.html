@@ -1,3 +1,12 @@
-<p>
-  checkbox-list works!
-</p>
+<ul class="checkBoxList-list">
+  <li *ngFor="let item of fullList"
+      class="checkBoxList-list_item">
+    <label class="checkBoxList_item-label">
+      <input id="checkBoxList-item_{{index}}"
+             class="checkBoxList_item-input"
+             (change)="changeState(item)"
+             type="checkbox">
+      {{item.label}}
+    </label>
+  </li>
+</ul>
