@@ -20,45 +20,48 @@ export class CheckboxListComponent implements ControlValueAccessor, OnInit {
   @Input()
   set fullList(list: Array<{ label: string, checked: boolean, data? }>) {
     this._fullList = list;
-  };
+  }
 
   public onChange: Function;
   public onTouched: Function;
 
   set value(value) {
     this._checkedList = value;
-  }
-  get value() {
-    if (this._fullList) {
-      return this._fullList.reduce((result, item) => {
-        if (item.checked) {
-          result.push(item.data);
-        }
-        return result;
-      }, [])
+    if (this.onChange) {
+      this.onChange(this._checkedList);
     }
-    return [];
   }
+
+  get value(): any[] {
+    // if (this._fullList) {
+    //   return this._fullList.reduce((result, item) => {
+    //     console.log(item);
+    //     if (item.checked) {
+    //       result.push(item.data);
+    //     }
+    //     return result;
+    //   }, []);
+    // }
+    return this._checkedList;
+  }
+
   constructor() {
   }
 
   ngOnInit() {
-    // setInterval(context => context._checkedList.push({}), 1000, this);
   }
 
   click() {
-    let result = this._fullList.reduce((result, item) => {
+    this.value = this._fullList.reduce((array, item) => {
       if (item.checked) {
-        result.push(item.data);
+        array.push(item.data);
       }
-      return result;
+      return array;
     }, []);
-    console.log(result);
   }
 
   writeValue(value: any[]) {
     this.value = value;
-    // this.onChange(this.value);
   }
 
   registerOnChange(fn: any) {

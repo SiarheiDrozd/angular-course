@@ -5,6 +5,7 @@
       <input id="checkBoxList-item_{{i}}"
              class="checkBoxList_item-input"
              [(ngModel)]="_fullList[i].checked"
+             name="checkboxListItem_{{i}}"
              (click)="click()"
              type="checkbox">
       {{item.label}}
