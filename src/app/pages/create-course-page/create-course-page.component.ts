@@ -14,9 +14,8 @@ import {Observable} from 'rxjs/Observable';
 export class CreateCoursePageComponent implements OnInit, OnDestroy {
   private routeSub: Subscription;
 
-  public course: Object;
+  public course;
   public authorsList: Observable<any>;
-  public courseAuthors: any[];
 
   constructor(private _route: ActivatedRoute,
               private _coursesService: CoursesPageService,
@@ -41,16 +40,6 @@ export class CreateCoursePageComponent implements OnInit, OnDestroy {
           return {label: `${item.firstName} ${item.lastName}`, checked: false, data: item};
         });
       });
-    this.courseAuthors = [
-      {
-        'firstName': 'Autumn',
-        'lastName': 'Solis'
-      },
-      {
-        'firstName': 'Bell',
-        'lastName': 'Hull'
-      }
-    ];
   }
 
   back() {
