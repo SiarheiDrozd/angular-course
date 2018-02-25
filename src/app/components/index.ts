@@ -8,3 +8,5 @@ export * from './logo/logo.component';
 export * from './modal/modal.component';
 export * from './search-form/search-form.component';
 export * from './toolbox/toolbox.component';
+export * from './date-input/date-input.component';
+export * from './checkbox-list/checkbox-list.component';

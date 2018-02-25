@@ -1,5 +1,5 @@
 <section id="{{course.id}}"
-         class="course-block clearfix inline-list">
+         class="course-block inline-list vertical-align_parent__all-children">
   <div class="course-block_description inline-block"
        [ngClass]="{'full-width': !edit}">
     <header class="course-block_header vertical-align_parent">
@@ -19,7 +19,7 @@
     </p>
   </div>
   <div *ngIf="edit"
-       class="course-block_controls inline-block align-middle_vertical">
+       class="course-block_controls inline-block">
     <button class="button course-block_button capitalize"
             [routerLink]="['./', course.id]">
       edit

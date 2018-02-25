@@ -4,80 +4,72 @@
   </header>
 
   <main class="main">
-    <div class="wrapper__create-course">
-
-      <label class="magic-underline label block inline-list">
-        <span class="label-text__half-width center-text">
-          Title
-        </span>
-        <input type="text"
-               class="input"
-               [(ngModel)]="course.title">
-      </label>
-
-      <label class="magic-underline label block inline-list">
-        <span class="label-text__half-width center-text">
-          Description
-        </span>
-        <textarea type="text"
-                  class="input textarea_description"
-                  [(ngModel)]="course.description"></textarea>
-      </label>
-
-      <label class="magic-underline label block inline-list">
-        <span class="label-text__half-width center-text">
-          Date
-        </span>
-        <input type="date"
-               class="input"
-               [(ngModel)]="course.date">
-      </label>
-
-      <label class="magic-underline label block inline-list">
-        <span class="label-text__half-width center-text">
-          Duration
-        </span>
-        <input type="number"
-               class="input input_duration"
-               name="duration"
-               [(ngModel)]="course.duration">
-        <span class="text_duration">{{course.duration | duration}}</span>
-      </label>
-
-      <label class="magic-underline label block inline-list">
-        <span class="label-text__half-width center-text align-middle_vertical">
-          Authors
-        </span>
-        <span class="label-text__half-width inline-list">
-          <select multiple
-                  class="block create-course_select">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-          </select>
-          <span class="block">
-            <button class="block">
-              >
-            </button>
-            <button class="block">
-              <
-            </button>
+    <div class="wrapper__create-course vertical-align_parent__all-children">
+      <form class="margin-top_l"
+            #courseForm="ngForm"
+            (submit)="submit(courseForm)">
+        <label class="magic-underline label block inline-list">
+          <span class="label-text__half-width center-text">
+            Title
           </span>
-          <select multiple
-                  class="block create-course_select">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-          </select>
-        </span>
-      </label>
+          <input name="title"
+                 type="text"
+                 class="input"
+                 [ngModel]="courseForm.title"
+                 required
+                 minlength="3" maxlength="50">
+        </label>
 
-      <div class="align-middle_horizontal inline-block">
-        <button class="button">Save</button>
-        <button class="button" (click)="back()">Cancel</button>
-      </div>
+        <label class="magic-underline label block inline-list">
+          <span class="label-text__half-width center-text">
+            Description
+          </span>
+          <textarea name="description"
+                    type="text"
+                    resize
+                    class="input textarea_description"
+                    [ngModel]="courseForm.description"
+                    required
+                    maxlength="500">
+          </textarea>
+        </label>
+        <label class="magic-underline label block inline-list">
+          <span class="label-text__half-width center-text">
+            Date
+          </span>
+          <app-date-input class="date-input"
+                          name="date"
+                          [(ngModel)]="courseForm.date"
+                          required>
+          </app-date-input>
+        </label>
+
+        <label class="magic-underline label block inline-list">
+          <span class="label-text__half-width center-text">
+            Duration
+          </span>
+          <input type="number"
+                 class="input input_duration"
+                 name="duration"
+                 [ngModel]="courseForm.duration"
+                 required>
+          <span class="text_duration">{{courseForm.value.duration | duration}}</span>
+        </label>
+
+        <label class="magic-underline label block inline-list">
+          <span class="label-text__half-width center-text">
+            Authors
+          </span>
+          <app-checkbox-list [(ngModel)]="courseAuthors"
+                             [fullList]="authorsList"
+                             name="authors"></app-checkbox-list>
+        </label>
+
+        <div class="align-middle_horizontal inline-block">
+          <button class="button" [disabled]="courseForm.invalid" type="submit">Save</button>
+          <button class="button" (click)="back()">Cancel</button>
+        </div>
+      </form>
     </div>
   </main>
 

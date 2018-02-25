@@ -10,7 +10,7 @@ import * as CommonComponents from './';
     FormsModule
   ],
   declarations: [
-    ...Object.values(CommonComponents)
+    ...Object.values(CommonComponents),
   ],
   exports: [
     ...Object.values(CommonComponents)

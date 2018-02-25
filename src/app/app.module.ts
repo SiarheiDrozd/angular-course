@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { ComponentsModule } from './components/components.module';
 import { CoursesPageModule } from './pages/courses-page/courses-page.module';
@@ -26,6 +26,7 @@ import {AppRoutes} from './pages/routes';
     BrowserModule,
     FormsModule,
     PipesModule,
+    ReactiveFormsModule,
     ComponentsModule,
     CoursesPageModule,
     LoginPageModule,
