@@ -3,8 +3,6 @@ import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {CoursesPageService} from '../courses-page/courses-page.service';
 import {Location} from '@angular/common';
-import {Component, OnInit} from '@angular/core';
-import {Location} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 
@@ -65,8 +63,5 @@ export class CreateCoursePageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.routeSub.unsubscribe();
-  }
-  back() {
-    this._location.back();
   }
 }
