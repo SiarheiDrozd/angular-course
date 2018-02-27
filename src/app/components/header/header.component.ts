@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const STORED_USER = this.authService.getUserInfo();
     if (STORED_USER && !this.isLogged) {
       this.authService.logIn(STORED_USER);
+      this.authService.storeLogIn(STORED_USER);
     }
 
     this.authStateSub = this.authService.authorizationStatus

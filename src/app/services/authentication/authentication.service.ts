@@ -4,24 +4,37 @@ import {User} from './user.class';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {AuthorizationStatus} from './authorizationStatus.interface';
+import {Store} from '@ngrx/store';
 
 @Injectable()
 class AuthenticationService {
   private _authorizationStatus: ReplaySubject<Object>;
   private readonly host = 'http://localhost:3004';
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+              private _store: Store<any>) {
     this._authorizationStatus = new ReplaySubject<AuthorizationStatus>(1);
+
+    _store.select('authorizationStatus').subscribe(authorizationStatus => {
+      this._authorizationStatus = authorizationStatus;
+    });
   }
 
   get authorizationStatus() {
     return this._authorizationStatus;
   }
 
+  storeLogIn(userToSet) {
+    this._store.dispatch({
+      type: 'login',
+      payload: userToSet
+    })
+  };
+
   logIn(userToSet) {
     const body = {
       login: userToSet.login,
-      password: userToSet.password
+      password: userToSet.password,
     };
 
     this.httpClient.post(`${this.host}/auth/login`, body)
@@ -36,7 +49,7 @@ class AuthenticationService {
                   this._authorizationStatus.next({
                     status: true,
                     message: 'Authorized',
-                    user: new User(userData)
+                    user: new User(userData),
                   });
                   this.setUserInfo(userData);
                 });
@@ -48,14 +61,14 @@ class AuthenticationService {
             this._authorizationStatus.next({
               status: false,
               message: 'External error',
-              user: null
+              user: null,
             });
           } else {
             console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
             this._authorizationStatus.next({
               status: false,
               message: 'Wrong Login/Password pair',
-              user: null
+              user: null,
             });
           }
         });
@@ -65,7 +78,7 @@ class AuthenticationService {
     this._authorizationStatus.next({
       status: false,
       message: 'Unauthorized',
-      user: null
+      user: null,
     });
     window.localStorage.removeItem('user');
   }
@@ -81,5 +94,5 @@ class AuthenticationService {
 
 export {
   AuthenticationService,
-  User
+  User,
 };
