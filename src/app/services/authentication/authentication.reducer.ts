@@ -5,20 +5,16 @@ import {User} from "./user.class";
 export const LOGIN = 'login';
 export const LOGOUT = 'logout';
 
-export const authenticationReducer: ActionReducer = (store: {}, action: Action) => {
+export const authenticationReducer = (store, action) => {
   switch (action.type) {
     case LOGIN:
-      return logIn(action.payload)
+      return logIn(action.payload);
+    default:
+      return [];
   }
 };
 
-export class authenticationLogin implements Action {
-  type = LOGIN;
-
-  constructor(public payload: any, private httpClient: HttpClient) {}
-}
-
-function logIn({userToSet}){
+function logIn({userToSet}) {
   const body = {
     login: userToSet.login,
     password: userToSet.password

@@ -16,13 +16,14 @@ import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.compo
 import {AuthInterceptor} from './services/authentication/auth-interceptor.class';
 import {PipesModule} from './pipes/pipes.module';
 import {AppRoutes} from './pages/routes';
-import {authenticationReducer} from "./services/authentication/authentication.reducer";
-import {StoreModule} from "@ngrx/store";
+import {authenticationReducer} from './services/authentication/authentication.reducer';
+import {StoreModule} from '@ngrx/store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,13 +37,16 @@ import {StoreModule} from "@ngrx/store";
     HttpClientModule,
     AuthenticationModule.forRoot(),
     RouterModule.forRoot(AppRoutes),
-    StoreModule.provideStore(authenticationReducer),
-    // StoreDevtoolsModule.instrumentOnlyWithExtension(),
+    StoreModule.forRoot({authenticationReducer}),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: false // Restrict extension to log-only mode
+    }),
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }
