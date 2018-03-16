@@ -1,10 +1,10 @@
-import {Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-course-block',
   templateUrl: './course-block.component.html',
   styleUrls: ['./course-block.component.less'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseBlockComponent implements OnInit {
   @Input() course;

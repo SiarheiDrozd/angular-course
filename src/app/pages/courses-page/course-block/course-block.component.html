@@ -9,8 +9,8 @@
       <span class="vertical-align_child">
         {{course.duration | duration}}
         <i class="fa-star"
-                 [ngClass]="{'fas': course.topRated, 'far': !course.topRated}"
-                 (click)="rateCourse($event)"></i>
+           [ngClass]="{'fas': course.topRated, 'far': !course.topRated}"
+           (click)="rateCourse($event)"></i>
       </span>
       <span class="float-right">{{course.date | date}}</span>
     </header>
@@ -21,7 +21,7 @@
   <div *ngIf="edit"
        class="course-block_controls inline-block">
     <button class="button course-block_button capitalize"
-            (click)="emitEdit($event)">
+            [routerLink]="['./', course.id]">
       edit
     </button>
     <button class="button course-block_button capitalize"

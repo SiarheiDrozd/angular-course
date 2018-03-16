@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, Input} from '@angular/core';
+import {Component, OnInit, OnDestroy, AfterContentChecked, Input, ChangeDetectionStrategy} from '@angular/core';
 import {AuthenticationService, User} from '../../services/';
 import {Subscription} from 'rxjs/Subscription';
 import {AuthorizationStatus} from '../../services/authentication/authorizationStatus.interface';
