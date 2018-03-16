@@ -63,10 +63,14 @@ a:hover {
   background: #26a69a;
   color: @white;
   height: @height-button;
-}
 
-.button:hover {
-  background: lighten(@green, 10%);
+  &:hover {
+    background: lighten(@green, 10%);
+  }
+
+  &[disabled] {
+    background: lighten(@gray, 25%);
+  }
 }
 
 .label {
@@ -86,12 +90,18 @@ a:hover {
 
 .input{
   height: @height-input;
-  border: 1px solid lighten(@green, 40%);
   padding: @padding-s @padding-xl;
+  border-width: 1px;
+  border-style: solid;
+  border-color: lighten(@green, 40%);
 
   &[type="checkbox"] {
     height: @height-input / 2;
     border: none;
+  }
+
+  &.ng-invalid:not(.ng-untouched) {
+    border-color: @red;
   }
 }
 
@@ -101,5 +111,13 @@ a:hover {
   &:hover {
     text-decoration: underline;
     cursor: pointer;
+  }
+}
+
+.date-input {
+  width: 50%;
+
+  .input {
+    width: 50%;
   }
 }

@@ -12,11 +12,6 @@ class AuthenticationService {
 
   constructor(private httpClient: HttpClient) {
     this._authorizationStatus = new ReplaySubject<AuthorizationStatus>(1);
-    this._authorizationStatus.next({
-      status: false,
-      message: 'Unauthorized',
-      user: null
-    });
   }
 
   get authorizationStatus() {
@@ -64,7 +59,6 @@ class AuthenticationService {
             });
           }
         });
-    return false;
   }
 
   logOut() {

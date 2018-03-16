@@ -16,6 +16,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   private authStatusMessage: string;
   private authStatus: boolean;
   private authServiceSub: Subscription;
+
   @Output() whenLogin = new EventEmitter();
 
   constructor(private authService: AuthenticationService) {
@@ -30,6 +31,12 @@ export class LoginFormComponent implements OnInit, OnDestroy {
       .subscribe((authSt: AuthorizationStatus) => {
         this.authStatusMessage = authSt.message;
         this.authStatus = authSt.status;
+        if (this.authStatus) {
+          this.whenLogin.emit({
+            success: true,
+            user: this.user
+          });
+        }
       });
   }
 
@@ -37,17 +44,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     this.authServiceSub.unsubscribe();
   }
 
-  login(): void {
-    if (this.authService.logIn(this.user)) {
-      this.whenLogin.emit({
-        success: true,
-        user: this.user
-      });
-    } else {
-      this.whenLogin.emit({
-        success: false,
-        user: null
-      });
-    }
+  submit(form): void {
+    this.authService.logIn(form.value);
   }
 }
